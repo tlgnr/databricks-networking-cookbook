@@ -1,0 +1,25 @@
+---
+#-----------------------------------
+# Hub - Endpoints
+#-----------------------------------
+sg-hub-endpoints-${environment}-${location}:
+  name: sg-hub-endpoints-${environment}-${location}
+  resource_group_name: rg-hub-${environment}-${location}
+#-----------------------------------
+# Hub - Public
+#-----------------------------------
+sg-hub-public-${environment}-${location}:
+  name: sg-hub-public-${environment}-${location}
+  resource_group_name: rg-hub-${environment}-${location}
+#-----------------------------------
+# Hub - Private
+#-----------------------------------
+sg-hub-private-${environment}-${location}:
+  name: sg-hub-private-${environment}-${location}
+  resource_group_name: rg-hub-${environment}-${location}
+#-----------------------------------
+# Hub - Database
+#-----------------------------------
+sg-hub-database-${environment}-${location}:
+  name: sg-hub-database-${environment}-${location}
+  resource_group_name: rg-hub-${environment}-${location}

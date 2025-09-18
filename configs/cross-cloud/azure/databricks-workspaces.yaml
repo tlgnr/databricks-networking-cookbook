@@ -1,0 +1,17 @@
+---
+#-----------------------------------
+# Workload
+#-----------------------------------
+adb-workload-${environment}-${location}:
+  managed_resource_group_name: rg-workload-managed-${environment}-${location}
+  name: adb-workload-${environment}-${location}
+  network_security_group_rules_required: NoAzureDatabricksRules
+  no_public_ip: true
+  private_network_security_group_name: sg-hub-private-${environment}-${location}
+  private_subnet_name: subnet-hub-private-${environment}-${location}
+  public_network_access_enabled: true
+  public_network_security_group_name: sg-hub-public-${environment}-${location}
+  public_subnet_name: subnet-hub-public-${environment}-${location}
+  resource_group_name: rg-hub-${environment}-${location}
+  sku: premium
+  virtual_network_name: vnet-hub-${environment}-${location}

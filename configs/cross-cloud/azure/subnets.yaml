@@ -1,0 +1,86 @@
+---
+#-----------------------------------
+# Hub - Endpoints
+#-----------------------------------
+subnet-hub-endpoints-${environment}-${location}:
+  address_prefixes:
+    - 192.168.0.0/24
+  delegation:
+  name: subnet-hub-endpoints-${environment}-${location}
+  network_security_group_name: sg-hub-endpoints-${environment}-${location}
+  resource_group_name: rg-hub-${environment}-${location}
+  route_table_name: rt-hub-endpoints-${environment}-${location}
+  service_endpoints:
+  virtual_network_name: vnet-hub-${environment}-${location}
+#-----------------------------------
+# Hub - Gateway
+#-----------------------------------
+subnet-hub-gateway-${environment}-${location}:
+  address_prefixes:
+    - 192.168.1.0/27
+  delegation:
+  name: GatewaySubnet
+  network_security_group_name: null
+  resource_group_name: rg-hub-${environment}-${location}
+  route_table_name: rt-hub-gateway-${environment}-${location}
+  service_endpoints:
+  virtual_network_name: vnet-hub-${environment}-${location}
+#-----------------------------------
+# Hub - Public
+#-----------------------------------
+subnet-hub-public-${environment}-${location}:
+  address_prefixes:
+    - 192.168.2.0/24
+  delegation:
+    name: Microsoft.Databricks/workspaces
+    service_delegation:
+      actions:
+        - Microsoft.Network/virtualNetworks/subnets/join/action
+        - Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action
+        - Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action
+      name: Microsoft.Databricks/workspaces
+  name: subnet-hub-public-${environment}-${location}
+  network_security_group_name: null
+  resource_group_name: rg-hub-${environment}-${location}
+  route_table_name: rt-hub-public-${environment}-${location}
+  service_endpoints:
+  virtual_network_name: vnet-hub-${environment}-${location}
+#-----------------------------------
+# Hub - Private
+#-----------------------------------
+subnet-hub-private-${environment}-${location}:
+  address_prefixes:
+    - 192.168.3.0/24
+  delegation:
+    name: Microsoft.Databricks/workspaces
+    service_delegation:
+      actions:
+        - Microsoft.Network/virtualNetworks/subnets/join/action
+        - Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action
+        - Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action
+      name: Microsoft.Databricks/workspaces
+  name: subnet-hub-private-${environment}-${location}
+  network_security_group_name: null
+  resource_group_name: rg-hub-${environment}-${location}
+  route_table_name: rt-hub-private-${environment}-${location}
+  service_endpoints:
+  virtual_network_name: vnet-hub-${environment}-${location}
+#-----------------------------------
+# Hub - Database
+#-----------------------------------
+subnet-hub-database-${environment}-${location}:
+  address_prefixes:
+    - 192.168.4.0/24
+  delegation:
+    name: dlg-Microsoft.DBforPostgreSQL-flexibleServers
+    service_delegation:
+      actions:
+        - Microsoft.Network/virtualNetworks/subnets/join/action
+      name: Microsoft.DBforPostgreSQL/flexibleServers
+  name: subnet-hub-database-${environment}-${location}
+  network_security_group_name: sg-hub-database-${environment}-${location}
+  resource_group_name: rg-hub-${environment}-${location}
+  route_table_name: rt-hub-database-${environment}-${location}
+  service_endpoints:
+    - Microsoft.Storage
+  virtual_network_name: vnet-hub-${environment}-${location}

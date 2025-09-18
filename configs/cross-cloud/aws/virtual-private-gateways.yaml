@@ -1,0 +1,7 @@
+---
+#-----------------------------------
+# Hub
+#-----------------------------------
+vgw-hub-${environment}-${region}:
+  name: vgw-hub-${environment}-${region}
+  vpc_name: vpc-hub-${environment}-${region}

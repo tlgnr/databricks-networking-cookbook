@@ -1,0 +1,25 @@
+---
+#-----------------------------------
+# Hub - Endpoints
+#-----------------------------------
+sg-hub-endpoints-${environment}-${location}:
+  network_security_group_name: sg-hub-endpoints-${environment}-${location}
+  subnet_name: subnet-hub-endpoints-${environment}-${location}
+#-----------------------------------
+# Hub - Public
+#-----------------------------------
+sg-hub-public-${environment}-${location}:
+  network_security_group_name: sg-hub-public-${environment}-${location}
+  subnet_name: subnet-hub-public-${environment}-${location}
+#-----------------------------------
+# Hub - Private
+#-----------------------------------
+sg-hub-private-${environment}-${location}:
+  network_security_group_name: sg-hub-private-${environment}-${location}
+  subnet_name: subnet-hub-private-${environment}-${location}
+#-----------------------------------
+# Hub - Database
+#-----------------------------------
+sg-hub-database-${environment}-${location}:
+  network_security_group_name: sg-hub-database-${environment}-${location}
+  subnet_name: subnet-hub-database-${environment}-${location}

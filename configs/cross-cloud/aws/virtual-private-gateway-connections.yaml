@@ -1,0 +1,19 @@
+---
+#-----------------------------------
+# Customer Gateway Primary
+#-----------------------------------
+con-hub-primary-${environment}-${region}:
+  customer_gateway_name: cgw-hub-primary-${environment}-${region}
+  name: con-hub-primary-${environment}-${region}
+  tunnel1_inside_cidr: 169.254.21.0/30
+  tunnel2_inside_cidr: 169.254.22.0/30
+  virtual_private_gateway_name: vgw-hub-${environment}-${region}
+#-----------------------------------
+# Customer Gateway Secondary
+#-----------------------------------
+con-hub-secondary-${environment}-${region}:
+  customer_gateway_name: cgw-hub-secondary-${environment}-${region}
+  name: con-hub-secondary-${environment}-${region}
+  tunnel1_inside_cidr: 169.254.21.4/30
+  tunnel2_inside_cidr: 169.254.22.4/30
+  virtual_private_gateway_name: vgw-hub-${environment}-${region}

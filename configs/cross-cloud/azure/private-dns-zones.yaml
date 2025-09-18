@@ -1,0 +1,22 @@
+---
+#-----------------------------------
+# Databricks
+#-----------------------------------
+privatelink.azuredatabricks.net:
+  name: privatelink.azuredatabricks.net
+  resource_group_name: rg-hub-${environment}-${location}
+  virtual_network_name: vnet-hub-${environment}-${location}
+#-----------------------------------
+# Storage - Blob
+#-----------------------------------
+privatelink.blob.core.windows.net:
+  name: privatelink.blob.core.windows.net
+  resource_group_name: rg-hub-${environment}-${location}
+  virtual_network_name: vnet-hub-${environment}-${location}
+#-----------------------------------
+# Storage - DFS
+#-----------------------------------
+privatelink.dfs.core.windows.net:
+  name: privatelink.dfs.core.windows.net
+  resource_group_name: rg-hub-${environment}-${location}
+  virtual_network_name: vnet-hub-${environment}-${location}

@@ -1,0 +1,6 @@
+---
+#-----------------------------------
+# Hub
+#-----------------------------------
+rg-hub-${environment}-${location}:
+  name: rg-hub-${environment}-${location}

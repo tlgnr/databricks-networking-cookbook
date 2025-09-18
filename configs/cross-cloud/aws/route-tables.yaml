@@ -1,0 +1,55 @@
+---
+#-----------------------------------
+# Private
+#-----------------------------------
+rt-hub-private-${environment}-${region}:
+  name: rt-hub-private-${environment}-${region}
+  subnet_names:
+    - subnet-hub-private-${environment}-${region}a
+    - subnet-hub-private-${environment}-${region}b
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# Endpoints
+#-----------------------------------
+rt-hub-endpoints-${environment}-${region}:
+  name: rt-hub-endpoints-${environment}-${region}
+  subnet_names:
+    - subnet-hub-endpoints-${environment}-${region}a
+    - subnet-hub-endpoints-${environment}-${region}b
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# Public
+#-----------------------------------
+rt-hub-public-${environment}-${region}:
+  name: rt-hub-public-${environment}-${region}
+  subnet_names:
+    - subnet-hub-public-${environment}-${region}a
+    - subnet-hub-public-${environment}-${region}b
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# NAT
+#-----------------------------------
+rt-hub-nat-${environment}-${region}:
+  name: rt-hub-nat-${environment}-${region}
+  subnet_names:
+    - subnet-hub-nat-${environment}-${region}a
+    - subnet-hub-nat-${environment}-${region}b
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# RDS
+#-----------------------------------
+rt-hub-rds-${environment}-${region}:
+  name: rt-hub-rds-${environment}-${region}
+  subnet_names:
+    - subnet-hub-rds-${environment}-${region}a
+    - subnet-hub-rds-${environment}-${region}b
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# NLB
+#-----------------------------------
+rt-hub-nlb-${environment}-${region}:
+  name: rt-hub-nlb-${environment}-${region}
+  subnet_names:
+    - subnet-hub-nlb-${environment}-${region}a
+    - subnet-hub-nlb-${environment}-${region}b
+  vpc_name: vpc-hub-${environment}-${region}

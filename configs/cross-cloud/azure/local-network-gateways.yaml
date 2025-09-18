@@ -1,0 +1,19 @@
+---
+#-----------------------------------
+# Azure - Primary
+#-----------------------------------
+lng-hub-primary-${environment}-${location}:
+  connection_name: con-hub-primary-${environment}-${region}
+  name: lng-hub-primary-${environment}-${location}
+  peer_gateway_name: vgw-hub-${environment}-${region}
+  peer_vpc_name: vpc-hub-${environment}-${location}
+  resource_group_name: rg-hub-${environment}-${location}
+#-----------------------------------
+# Azure - Secondary
+#-----------------------------------
+lng-hub-secondary-${environment}-${location}:
+  connection_name: con-hub-secondary-${environment}-${region}
+  name: lng-hub-secondary-${environment}-${location}
+  peer_gateway_name: vgw-hub-${environment}-${region}
+  peer_vpc_name: vpc-hub-${environment}-${location}
+  resource_group_name: rg-hub-${environment}-${location}

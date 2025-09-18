@@ -1,0 +1,15 @@
+---
+#-----------------------------------
+# Databricks
+#-----------------------------------
+pep-databricks-${environment}-${location}:
+  name: pep-databricks-${environment}-${location}
+  private_connection_resource_name: adb-workload-${environment}-${location}
+  private_dns_zone_group_name: databricks
+  private_dns_zone_name: privatelink.azuredatabricks.net
+  private_service_connection_name: psc-databricks-${environment}-${location}
+  private_sevice_connection_type: databricks
+  resource_group_name: rg-hub-${environment}-${location}
+  subnet_name: subnet-hub-endpoints-${environment}-${location}
+  subresource_name: databricks_ui_api
+  virtual_network_name: vnet-hub-${environment}-${location}

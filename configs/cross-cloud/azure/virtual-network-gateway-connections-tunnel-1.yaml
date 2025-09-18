@@ -1,0 +1,25 @@
+---
+#-----------------------------------
+# Azure - Primary
+#-----------------------------------
+con-hub-primary-${environment}-${location}:
+  connection_name: con-hub-primary-${environment}-${region}
+  enable_bgp: true
+  local_network_gateway_name: lng-hub-primary-${environment}-${location}
+  name: con-hub-primary-${environment}-${location}
+  primary_custom_bgp_address: first
+  resource_group_name: rg-hub-${environment}-${location}
+  secondary_custom_bgp_address: third
+  virtual_network_gateway_name: vgw-hub-${environment}-${location}
+#-----------------------------------
+# Azure - Secondary
+#-----------------------------------
+con-hub-secondary-${environment}-${location}:
+  connection_name: con-hub-secondary-${environment}-${region}
+  enable_bgp: true
+  local_network_gateway_name: lng-hub-secondary-${environment}-${location}
+  name: con-hub-secondary-${environment}-${location}
+  primary_custom_bgp_address: first
+  resource_group_name: rg-hub-${environment}-${location}
+  secondary_custom_bgp_address: third
+  virtual_network_gateway_name: vgw-hub-${environment}-${location}

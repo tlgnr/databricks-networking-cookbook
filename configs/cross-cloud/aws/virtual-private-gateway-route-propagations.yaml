@@ -1,0 +1,8 @@
+---
+#-----------------------------------
+# Hub - Virtual Private Gateway
+#-----------------------------------
+vgw-hub-${environment}-${region}:
+  - rt-hub-rds-${environment}-${region}
+  - rt-hub-private-${environment}-${region}
+  - rt-hub-nlb-${environment}-${region}

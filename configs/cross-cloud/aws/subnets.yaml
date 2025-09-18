@@ -1,0 +1,109 @@
+---
+#-----------------------------------
+# Private AZ1
+#-----------------------------------
+subnet-hub-private-${environment}-${region}a:
+  availability_zone: ${region}a
+  cidr_block: 10.0.0.0/24
+  name: subnet-hub-private-${environment}-${region}a
+  route_table_name: rt-hub-private-${environment}-${region}
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# Private AZ2
+#-----------------------------------
+subnet-hub-private-${environment}-${region}b:
+  availability_zone: ${region}b
+  cidr_block: 10.0.1.0/24
+  name: subnet-hub-private-${environment}-${region}b
+  route_table_name: rt-hub-private-${environment}-${region}
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# Endpoints AZ1
+#-----------------------------------
+subnet-hub-endpoints-${environment}-${region}a:
+  availability_zone: ${region}a
+  cidr_block: 10.0.2.0/24
+  name: subnet-hub-endpoints-${environment}-${region}a
+  route_table_name: rt-hub-endpoints-${environment}-${region}
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# Endpoints AZ2
+#-----------------------------------
+subnet-hub-endpoints-${environment}-${region}b:
+  availability_zone: ${region}b
+  cidr_block: 10.0.3.0/24
+  name: subnet-hub-endpoints-${environment}-${region}b
+  route_table_name: rt-hub-endpoints-${environment}-${region}
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# NAT AZ1
+#-----------------------------------
+subnet-hub-nat-${environment}-${region}a:
+  availability_zone: ${region}a
+  cidr_block: 10.0.4.0/24
+  name: subnet-hub-nat-${environment}-${region}a
+  route_table_name: rt-hub-nat-${environment}-${region}
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# NAT AZ2
+#-----------------------------------
+subnet-hub-nat-${environment}-${region}b:
+  availability_zone: ${region}b
+  cidr_block: 10.0.5.0/24
+  name: subnet-hub-nat-${environment}-${region}b
+  route_table_name: rt-hub-nat-${environment}-${region}
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# Public AZ1
+#-----------------------------------
+subnet-hub-public-${environment}-${region}a:
+  availability_zone: ${region}a
+  cidr_block: 10.0.6.0/24
+  name: subnet-hub-public-${environment}-${region}a
+  route_table_name: rt-hub-public-${environment}-${region}
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# Public AZ2
+#-----------------------------------
+subnet-hub-public-${environment}-${region}b:
+  availability_zone: ${region}b
+  cidr_block: 10.0.7.0/24
+  name: subnet-hub-public-${environment}-${region}b
+  route_table_name: rt-hub-public-${environment}-${region}
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# RDS AZ1
+#-----------------------------------
+subnet-hub-rds-${environment}-${region}a:
+  availability_zone: ${region}a
+  cidr_block: 10.0.8.0/24
+  name: subnet-hub-rds-${environment}-${region}a
+  route_table_name: rt-hub-rds-${environment}-${region}
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# RDS AZ2
+#-----------------------------------
+subnet-hub-rds-${environment}-${region}b:
+  availability_zone: ${region}b
+  cidr_block: 10.0.9.0/24
+  name: subnet-hub-rds-${environment}-${region}b
+  route_table_name: rt-hub-rds-${environment}-${region}
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# NLB AZ1
+#-----------------------------------
+subnet-hub-nlb-${environment}-${region}a:
+  availability_zone: ${region}b
+  cidr_block: 10.0.10.0/24
+  name: subnet-hub-nlb-${environment}-${region}a
+  route_table_name: rt-hub-nlb-${environment}-${region}
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# NLB AZ2
+#-----------------------------------
+subnet-hub-nlb-${environment}-${region}b:
+  availability_zone: ${region}b
+  cidr_block: 10.0.11.0/24
+  name: subnet-hub-nlb-${environment}-${region}b
+  route_table_name: rt-hub-nlb-${environment}-${region}
+  vpc_name: vpc-hub-${environment}-${region}

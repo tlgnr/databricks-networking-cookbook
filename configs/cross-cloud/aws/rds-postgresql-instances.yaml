@@ -1,0 +1,24 @@
+---
+#-----------------------------------
+# PostgresSQL
+#-----------------------------------
+rds-hub-postgresql-${environment}-${region}:
+  allocated_storage: 20
+  apply_immediately: true
+  copy_tags_to_snapshot: true
+  engine: postgres
+  engine_version: 17.4
+  iam_database_authentication_enabled: false
+  identifier: rds-hub-postgresql-${environment}-${region}
+  instance_class: db.t4g.micro
+  max_allocated_storage: 1000
+  parameter_group_name: default.postgres17
+  skip_final_snapshot: true
+  storage_encrypted: true
+  subnet_group_name: sgr-hub-rds-${environment}-${region}
+  subnet_names:
+    - subnet-hub-rds-${environment}-${region}a
+    - subnet-hub-rds-${environment}-${region}b
+  username: postgres
+  vpc_security_group_names:
+    - sgr-hub-rds-${environment}-${region}

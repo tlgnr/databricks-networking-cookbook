@@ -1,0 +1,23 @@
+---
+#-----------------------------------
+# Hub
+#-----------------------------------
+vgw-hub-${environment}-${location}:
+  active_active: true
+  apipa_addresses:
+    - 169.254.21.2
+    - 169.254.22.2
+    - 169.254.21.6
+    - 169.254.22.6
+  asn: 65515
+  enable_bgp: true
+  ip_configurations_first_public_ip_address_name: pip-hub-vgw-${environment}-${location}-001
+  ip_configurations_name: vgw-config
+  ip_configurations_second_public_ip_address_name: pip-hub-vgw-${environment}-${location}-002
+  ip_configurations_subnet_name: subnet-hub-gateway-${environment}-${location}
+  name: vgw-hub-${environment}-${location}
+  resource_group_name: rg-hub-${environment}-${location}
+  sku: VpnGw2
+  subnet_name: subnet-hub-gateway-${environment}-${location}
+  type: Vpn
+  vpn_type: RouteBased

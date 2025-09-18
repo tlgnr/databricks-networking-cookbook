@@ -1,0 +1,8 @@
+---
+#-----------------------------------
+# Public Subnets - To Internet Gateway
+#-----------------------------------
+public-subnet-${region}-to-igw:
+  destination_cidr_block: 0.0.0.0/0
+  internet_gateway_name: igw-hub-${environment}-${region}
+  route_table_name: rt-hub-public-${environment}-${region}

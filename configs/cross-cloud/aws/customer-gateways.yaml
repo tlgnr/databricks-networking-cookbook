@@ -1,0 +1,15 @@
+---
+#-----------------------------------
+# Azure - Primary
+#-----------------------------------
+cgw-hub-primary-${environment}-${region}:
+  ip_address: first
+  name: cgw-hub-primary-${environment}-${region}
+  peer_gateway_name: vgw-hub-${environment}-${location}
+#-----------------------------------
+# Azure - Secondary
+#-----------------------------------
+cgw-hub-secondary-${environment}-${region}:
+  ip_address: second
+  name: cgw-hub-secondary-${environment}-${region}
+  peer_gateway_name: vgw-hub-${environment}-${location}

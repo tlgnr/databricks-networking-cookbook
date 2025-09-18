@@ -1,0 +1,31 @@
+---
+#-----------------------------------
+# Hub - Endpoints
+#-----------------------------------
+rt-hub-endpoints-${environment}-${location}:
+  route_table_name: rt-hub-endpoints-${environment}-${location}
+  subnet_name: subnet-hub-endpoints-${environment}-${location}
+#-----------------------------------
+# Hub - Public
+#-----------------------------------
+rt-hub-public-${environment}-${location}:
+  route_table_name: rt-hub-public-${environment}-${location}
+  subnet_name: subnet-hub-public-${environment}-${location}
+#-----------------------------------
+# Hub - Private
+#-----------------------------------
+rt-hub-private-${environment}-${location}:
+  route_table_name: rt-hub-private-${environment}-${location}
+  subnet_name: subnet-hub-private-${environment}-${location}
+#-----------------------------------
+# Hub - Gateway
+#-----------------------------------
+rt-hub-gateway-${environment}-${location}:
+  route_table_name: rt-hub-gateway-${environment}-${location}
+  subnet_name: subnet-hub-gateway-${environment}-${location}
+#-----------------------------------
+# Hub - Database
+#-----------------------------------
+rt-hub-database-${environment}-${location}:
+  route_table_name: rt-hub-database-${environment}-${location}
+  subnet_name: subnet-hub-database-${environment}-${location}

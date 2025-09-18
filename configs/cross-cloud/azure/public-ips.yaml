@@ -1,0 +1,17 @@
+---
+#-----------------------------------
+# Hub - Virtual Network Gateway 1
+#-----------------------------------
+pip-hub-vgw-${environment}-${location}-001:
+  allocation_method: Static
+  name: pip-hub-vgw-${environment}-${location}-001
+  resource_group_name: rg-hub-${environment}-${location}
+  sku: Standard
+#-----------------------------------
+# Hub - Virtual Network Gateway 2
+#-----------------------------------
+pip-hub-vgw-${environment}-${location}-002:
+  allocation_method: Static
+  name: pip-hub-vgw-${environment}-${location}-002
+  resource_group_name: rg-hub-${environment}-${location}
+  sku: Standard

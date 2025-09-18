@@ -1,0 +1,68 @@
+---
+#-----------------------------------
+# Public
+#-----------------------------------
+sgr-hub-public-${environment}-${region}:
+  description: Security group for public instances
+  name: sgr-hub-public-${environment}-${region}
+  security_group_egress_rules:
+    - cidr_ipv4: 0.0.0.0/0
+      from_port: -1
+      ip_protocol: -1
+      prefix_list: 
+      to_port: -1
+  security_group_ingress_rules:
+    - cidr_ipv4: 10.0.0.0/16
+      from_port: -1
+      ip_protocol: -1
+      prefix_list: null
+      to_port: -1
+    - cidr_ipv4: 192.168.0.0/16
+      from_port: -1
+      ip_protocol: -1
+      prefix_list: null
+      to_port: -1
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# RDS
+#-----------------------------------
+sgr-hub-rds-${environment}-${region}:
+  description: Security group for RDS instances
+  name: sgr-hub-rds-${environment}-${region}
+  security_group_egress_rules:
+    - cidr_ipv4: 0.0.0.0/0
+      from_port: -1
+      ip_protocol: -1
+      prefix_list:
+      to_port: -1
+  security_group_ingress_rules:
+    - cidr_ipv4: 10.0.0.0/16
+      from_port: -1
+      ip_protocol: -1
+      prefix_list: null
+      to_port: -1
+    - cidr_ipv4: 192.168.0.0/16
+      from_port: -1
+      ip_protocol: -1
+      prefix_list: null
+      to_port: -1
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# NLB
+#-----------------------------------
+sgr-hub-nlb-${environment}-${region}:
+  description: Security group for NLB instances
+  name: sgr-hub-nlb-${environment}-${region}
+  security_group_egress_rules:
+    - cidr_ipv4: 0.0.0.0/0
+      from_port: -1
+      ip_protocol: -1
+      prefix_list:
+      to_port: -1
+  security_group_ingress_rules:
+    - cidr_ipv4: 10.0.0.0/16
+      from_port: -1
+      ip_protocol: -1
+      prefix_list: null
+      to_port: -1
+  vpc_name: vpc-hub-${environment}-${region}

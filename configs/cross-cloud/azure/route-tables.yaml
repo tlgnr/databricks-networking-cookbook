@@ -1,0 +1,31 @@
+---
+#-----------------------------------
+# Hub - Endpoints
+#-----------------------------------
+rt-hub-endpoints-${environment}-${location}:
+  name: rt-hub-endpoints-${environment}-${location}
+  resource_group_name: rg-hub-${environment}-${location}
+#-----------------------------------
+# Hub - Public
+#-----------------------------------
+rt-hub-public-${environment}-${location}:
+  name: rt-hub-public-${environment}-${location}
+  resource_group_name: rg-hub-${environment}-${location}
+#-----------------------------------
+# Hub - Private
+#-----------------------------------
+rt-hub-private-${environment}-${location}:
+  name: rt-hub-private-${environment}-${location}
+  resource_group_name: rg-hub-${environment}-${location}
+#-----------------------------------
+# Hub - Gateway
+#-----------------------------------
+rt-hub-gateway-${environment}-${location}:
+  name: rt-hub-gateway-${environment}-${location}
+  resource_group_name: rg-hub-${environment}-${location}
+#-----------------------------------
+# Hub - Database
+#-----------------------------------
+rt-hub-database-${environment}-${location}:
+  name: rt-hub-database-${environment}-${location}
+  resource_group_name: rg-hub-${environment}-${location}
