@@ -53,4 +53,5 @@ locals {
   azure_network_security_group_associations          = yamldecode(templatefile("../../configs/cross-cloud/azure/network-security-group-associations.yaml", { environment = var.environment, location = var.location }))
   azure_private_dns_zones                            = yamldecode(templatefile("../../configs/cross-cloud/azure/private-dns-zones.yaml", { environment = var.environment, location = var.location }))
   azure_private_endpoints                            = yamldecode(templatefile("../../configs/cross-cloud/azure/private-endpoints.yaml", { environment = var.environment, location = var.location }))
+  azure_databricks_metastores                        = yamldecode(templatefile("../../configs/cross-cloud/azure/databricks-metastores.yaml", { location = var.location }))
 }

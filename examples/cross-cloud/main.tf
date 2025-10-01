@@ -333,8 +333,8 @@ module "azure_local_network_gateway_tunnel_1" {
   asn                 = module.aws_virtual_private_gateway[each.value.peer_gateway_name].asn
   gateway_address     = module.aws_virtual_private_gateway_connection[each.value.connection_name].tunnel1_address
   bgp_peering_address = module.aws_virtual_private_gateway_connection[each.value.connection_name].tunnel1_vgw_inside_address
-  tags                = var.tags
   location            = var.location
+  tags                = var.tags
 }
 
 //-----------------------------------
@@ -350,8 +350,8 @@ module "azure_local_network_gateway_tunnel_2" {
   asn                 = module.aws_virtual_private_gateway[each.value.peer_gateway_name].asn
   gateway_address     = module.aws_virtual_private_gateway_connection[each.value.connection_name].tunnel2_address
   bgp_peering_address = module.aws_virtual_private_gateway_connection[each.value.connection_name].tunnel2_vgw_inside_address
-  tags                = var.tags
   location            = var.location
+  tags                = var.tags
 }
 
 //-----------------------------------
@@ -370,8 +370,8 @@ module "azure_virtual_network_gateway_connection_tunnel_1" {
   local_network_gateway_id     = module.azure_local_network_gateway_tunnel_1[each.value.local_network_gateway_name].id
   primary_custom_bgp_address   = module.azure_virtual_network_gateway[each.value.virtual_network_gateway_name].custom_bgp_addresses[each.value.primary_custom_bgp_address]
   secondary_custom_bgp_address = module.azure_virtual_network_gateway[each.value.virtual_network_gateway_name].custom_bgp_addresses[each.value.secondary_custom_bgp_address]
-  tags                         = var.tags
   location                     = var.location
+  tags                         = var.tags
 }
 
 //-----------------------------------
@@ -390,8 +390,8 @@ module "azure_virtual_network_gateway_connection_tunnel_2" {
   local_network_gateway_id     = module.azure_local_network_gateway_tunnel_2[each.value.local_network_gateway_name].id
   primary_custom_bgp_address   = module.azure_virtual_network_gateway[each.value.virtual_network_gateway_name].custom_bgp_addresses[each.value.primary_custom_bgp_address]
   secondary_custom_bgp_address = module.azure_virtual_network_gateway[each.value.virtual_network_gateway_name].custom_bgp_addresses[each.value.secondary_custom_bgp_address]
-  tags                         = var.tags
   location                     = var.location
+  tags                         = var.tags
 }
 
 //-----------------------------------
@@ -453,8 +453,8 @@ module "azure_private_endpoint" {
   private_service_connection_name = each.value.private_service_connection_name
   private_connection_resource_id  = lookup(lookup(local.azure_private_sevice_connection_types, each.value.private_sevice_connection_type), each.value.private_connection_resource_name).id
   subresource_name                = each.value.subresource_name
-  tags                            = var.tags
   location                        = var.location
+  tags                            = var.tags
 }
 
 //-----------------------------------
@@ -482,6 +482,42 @@ module "aws_rds_postgresql_instance" {
   subnet_group_name                   = each.value.subnet_group_name
   subnet_ids                          = [for name in each.value.subnet_names : module.aws_subnet[name].id]
 }
+
+//-----------------------------------
+// Azure Databricks Metastore
+//-----------------------------------
+module "azure_databricks_metastore" {
+  source = "../../modules/azure/databricks-metastore"
+
+  providers = {
+    databricks = databricks.azure_account
+  }
+
+  for_each = local.azure_databricks_metastores
+
+  name                   = each.value.name
+  storage_container_name = each.value.storage_container_name
+  storage_account_name   = each.value.storage_account_name
+  owner                  = each.value.owner
+  force_destroy          = each.value.force_destroy
+  location               = var.location
+}
+
+# //-----------------------------------
+# // Azure Databricks Metastore Assignment
+# //-----------------------------------
+# module "azure_databricks_metastore_assignment" {
+#   source = "../../modules/azure/databricks-metastore-assignment"
+
+
+
+#   for_each = local.azure_databricks_metastore_assignments
+
+#   metastore_id = module.azure_databricks_metastore[each.value.metastore_name].id
+#   workspace_id = module.azure_databricks_workspace[each.value.workspace_name].id
+#   location     = var.location
+#   tags         = var.tags
+# }
 
 
 

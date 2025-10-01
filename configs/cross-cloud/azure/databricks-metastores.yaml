@@ -1,0 +1,11 @@
+---
+#-----------------------------------
+# Eastus
+#-----------------------------------
+metastore-${location}:
+  name: metastore-${location}
+  storage_container_name: 
+  storage_account_name: 
+  owner:
+  region: ${location}
+  force_destroy: true
