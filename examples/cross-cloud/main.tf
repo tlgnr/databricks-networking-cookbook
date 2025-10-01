@@ -119,6 +119,10 @@ module "azure_virtual_network" {
 module "azure_network_security_group" {
   source = "../../modules/azure/network-security-group"
 
+  depends_on = [
+    module.azure_resource_group,
+  ]
+
   for_each = local.azure_network_security_groups
 
   name                = each.value.name
@@ -170,6 +174,10 @@ module "azure_network_security_group_association" {
 //-----------------------------------
 module "azure_route_table" {
   source = "../../modules/azure/route-table"
+
+  depends_on = [
+    module.azure_resource_group,
+  ]
 
   for_each = local.azure_route_tables
 
