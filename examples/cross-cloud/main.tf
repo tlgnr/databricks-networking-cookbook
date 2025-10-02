@@ -503,21 +503,17 @@ module "azure_databricks_metastore" {
   location               = var.location
 }
 
-# //-----------------------------------
-# // Azure Databricks Metastore Assignment
-# //-----------------------------------
-# module "azure_databricks_metastore_assignment" {
-#   source = "../../modules/azure/databricks-metastore-assignment"
+//-----------------------------------
+// Azure Databricks Metastore Assignment
+//-----------------------------------
+module "azure_databricks_metastore_assignment" {
+  source = "../../modules/azure/databricks-metastore-assignment"
 
+  for_each = local.azure_databricks_workspaces
 
-
-#   for_each = local.azure_databricks_metastore_assignments
-
-#   metastore_id = module.azure_databricks_metastore[each.value.metastore_name].id
-#   workspace_id = module.azure_databricks_workspace[each.value.workspace_name].id
-#   location     = var.location
-#   tags         = var.tags
-# }
+  workspace_id = module.azure_databricks_workspace[each.value.name].workspace_id
+  metastore_id = module.azure_databricks_metastore[each.value.metastore_name].id
+}
 
 
 

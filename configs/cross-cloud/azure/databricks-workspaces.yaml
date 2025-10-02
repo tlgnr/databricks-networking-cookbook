@@ -4,6 +4,7 @@
 #-----------------------------------
 adb-workload-${environment}-${location}:
   managed_resource_group_name: rg-workload-managed-${environment}-${location}
+  metastore_name: metastore-${location}
   name: adb-workload-${environment}-${location}
   network_security_group_rules_required: NoAzureDatabricksRules
   no_public_ip: true
