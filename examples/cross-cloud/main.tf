@@ -487,7 +487,7 @@ module "aws_rds_postgresql_instance" {
 // Azure Databricks Metastore
 //-----------------------------------
 module "azure_databricks_metastore" {
-  source = "../../modules/azure/databricks-metastore"
+  source = "../../modules/databricks/metastore"
 
   providers = {
     databricks = databricks.azure_account
@@ -507,13 +507,21 @@ module "azure_databricks_metastore" {
 // Azure Databricks Metastore Assignment
 //-----------------------------------
 module "azure_databricks_metastore_assignment" {
-  source = "../../modules/azure/databricks-metastore-assignment"
+  source = "../../modules/databricks/metastore-assignment"
+
+  providers = {
+    databricks = databricks.azure_account
+  }
 
   for_each = local.azure_databricks_workspaces
 
   workspace_id = module.azure_databricks_workspace[each.value.name].workspace_id
   metastore_id = module.azure_databricks_metastore[each.value.metastore_name].id
 }
+
+//-----------------------------------
+// External Connection
+//-----------------------------------
 
 
 
