@@ -438,6 +438,24 @@ module "azure_databricks_workspace" {
 }
 
 //-----------------------------------
+// Azure Databricks Account Permission Assignment
+//-----------------------------------
+module "azure_databricks_account_permission_assignment" {
+  source = "../../modules/databricks/permission-assignment"
+
+  providers = {
+    databricks = databricks.azure_account
+  }
+
+  for_each = local.azure_databricks_account_permission_assignments
+
+  principal_id   = each.value.principal_id
+  principal_type = each.value.principal_type
+  workspace_id   = module.azure_databricks_workspace[each.value.workspace_name].workspace_id
+  permissions    = each.value.permissions
+}
+
+//-----------------------------------
 // Azure Private Endpoints
 //-----------------------------------
 module "azure_private_endpoint" {
@@ -520,8 +538,50 @@ module "azure_databricks_metastore_assignment" {
 }
 
 //-----------------------------------
-// External Connection
+// Azure Databricks Connection
 //-----------------------------------
+module "azure_databricks_connection" {
+  source = "../../modules/databricks/connection"
+
+  depends_on = [
+    module.azure_databricks_metastore_assignment,
+    module.azure_databricks_account_permission_assignment,
+  ]
+
+  providers = {
+    databricks = databricks.azure_workspace
+  }
+
+  for_each = local.azure_databricks_connections
+
+  name            = each.value.name
+  connection_type = each.value.connection_type
+  comment         = each.value.comment
+  user            = each.value.user
+  password        = module.aws_rds_postgresql_instance[each.value.name].password
+  host            = split(":", module.aws_rds_postgresql_instance[each.value.name].endpoint)[0]
+  port            = each.value.port
+}
+
+//-----------------------------------
+// Azure Databricks Catalog
+//-----------------------------------
+module "azure_databricks_catalog" {
+  source = "../../modules/databricks/catalog"
+
+  providers = {
+    databricks = databricks.azure_workspace
+  }
+
+  for_each = local.azure_databricks_catalogs
+
+  name            = each.value.name
+  comment         = each.value.comment
+  connection_name = each.value.connection_name
+  isolation_mode  = each.value.isolation_mode
+  options         = each.value.options
+}
+
 
 
 

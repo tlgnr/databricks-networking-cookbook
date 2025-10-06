@@ -3,9 +3,9 @@
 # Eastus
 #-----------------------------------
 metastore-${location}:
-  name: metastore-${location}
-  storage_container_name: 
-  storage_account_name: 
-  owner:
-  region: ${location}
   force_destroy: true
+  name: metastore-${location}
+  owner: null
+  region: ${location}
+  storage_account_name: null
+  storage_container_name: null

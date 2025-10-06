@@ -1,0 +1,11 @@
+---
+#-----------------------------------
+# Postgres
+#-----------------------------------
+rds-hub-postgresql-${environment}-${region}:
+  name: rds-hub-postgresql-${environment}-${region}
+  comment: AWS RDS PostgreSQL Catalog
+  connection_name: rds-hub-postgresql-${environment}-${region}
+  isolation_mode: ISOLATED
+  options:
+    database: postgres

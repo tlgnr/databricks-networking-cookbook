@@ -1,0 +1,10 @@
+---
+#-----------------------------------
+# PostgreSQL
+#-----------------------------------
+rds-hub-postgresql-${environment}-${region}:
+  comment: AWS RDS PostgreSQL Connection
+  connection_type: POSTGRESQL
+  name: rds-hub-postgresql-${environment}-${region}
+  port: 5432
+  user: postgres

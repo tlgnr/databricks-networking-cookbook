@@ -1,0 +1,10 @@
+---
+#-----------------------------------
+# Account Level
+#-----------------------------------
+terraform-service-principal:
+  permissions: ["ADMIN"]
+  principal_id: ${databricks_client_id}
+  principal_name: terraform-service-principal
+  principal_type: SERVICE_PRINCIPAL
+  workspace_name: adb-workload-${environment}-${location}

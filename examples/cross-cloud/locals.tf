@@ -53,5 +53,14 @@ locals {
   azure_network_security_group_associations          = yamldecode(templatefile("../../configs/cross-cloud/azure/network-security-group-associations.yaml", { environment = var.environment, location = var.location }))
   azure_private_dns_zones                            = yamldecode(templatefile("../../configs/cross-cloud/azure/private-dns-zones.yaml", { environment = var.environment, location = var.location }))
   azure_private_endpoints                            = yamldecode(templatefile("../../configs/cross-cloud/azure/private-endpoints.yaml", { environment = var.environment, location = var.location }))
-  azure_databricks_metastores                        = yamldecode(templatefile("../../configs/cross-cloud/azure/databricks-metastores.yaml", { location = var.location }))
+}
+
+//-----------------------------------
+// Locals Databricks
+//-----------------------------------
+locals {
+  azure_databricks_metastores                     = yamldecode(templatefile("../../configs/cross-cloud/databricks/metastores.yaml", { location = var.location }))
+  azure_databricks_connections                    = yamldecode(templatefile("../../configs/cross-cloud/databricks/connections.yaml", { environment = var.environment, region = var.region }))
+  azure_databricks_account_permission_assignments = yamldecode(templatefile("../../configs/cross-cloud/databricks/account-permission-assignments.yaml", { databricks_client_id = var.databricks_client_id, location = var.location, environment = var.environment }))
+  azure_databricks_catalogs                       = yamldecode(templatefile("../../configs/cross-cloud/databricks/catalogs.yaml", { environment = var.environment, region = var.region }))
 }
