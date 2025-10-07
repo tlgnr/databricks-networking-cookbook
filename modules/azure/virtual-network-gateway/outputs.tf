@@ -14,10 +14,6 @@ output "custom_bgp_addresses" {
   }
 }
 
-output "all" {
-  value = azurerm_virtual_network_gateway.this
-}
-
 output "id" {
   value = azurerm_virtual_network_gateway.this.id
 }
