@@ -39,7 +39,7 @@ provider "databricks" {
 provider "databricks" {
   alias         = "azure_workspace"
   account_id    = var.databricks_account_id
-  host          = ""
+  host          = "https://adb-***.***.azuredatabricks.net"
   client_id     = var.databricks_client_id
   client_secret = var.databricks_client_secret
 }
