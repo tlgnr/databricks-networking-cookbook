@@ -93,7 +93,7 @@ subnet-hub-rds-${environment}-${region}b:
 # NLB AZ1
 #-----------------------------------
 subnet-hub-nlb-${environment}-${region}a:
-  availability_zone: ${region}b
+  availability_zone: ${region}a
   cidr_block: 10.0.10.0/24
   name: subnet-hub-nlb-${environment}-${region}a
   route_table_name: rt-hub-nlb-${environment}-${region}
