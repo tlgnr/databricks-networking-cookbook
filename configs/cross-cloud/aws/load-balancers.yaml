@@ -1,0 +1,15 @@
+---
+#-----------------------------------
+# Databricks
+#-----------------------------------
+nlb-hub-${environment}-${region}:
+  enable_deletion_protection: false
+  internal: true
+  load_balancer_type: network
+  name: nlb-hub-${environment}-${region}
+  subnet_names:
+    - subnet-hub-nlb-${environment}-${region}a
+    - subnet-hub-nlb-${environment}-${region}b
+  vpc_name: vpc-hub-${environment}-${region}
+  security_group_names:
+    - sgr-hub-nlb-${environment}-${region}

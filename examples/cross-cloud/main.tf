@@ -582,6 +582,23 @@ module "azure_databricks_catalog" {
   options         = each.value.options
 }
 
+//-----------------------------------
+// AWS Network Load Balancer
+//-----------------------------------
+module "aws_network_load_balancer" {
+  source = "../../modules/aws/load-balancer"
+
+  for_each = local.aws_load_balancers
+
+  name                       = each.value.name
+  internal                   = each.value.internal
+  enable_deletion_protection = each.value.enable_deletion_protection
+  load_balancer_type         = each.value.load_balancer_type
+  subnets                    = [for name in each.value.subnet_names : module.aws_subnet[name].id]
+  security_groups            = [for name in each.value.security_group_names : module.aws_security_group[name].id]
+  vpc_name                   = each.value.vpc_name
+}
+
 
 
 
