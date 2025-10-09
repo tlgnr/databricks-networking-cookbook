@@ -32,6 +32,7 @@ locals {
   aws_rds_postgresql_instances                   = yamldecode(templatefile("../../configs/cross-cloud/aws/rds-postgresql-instances.yaml", { environment = var.environment, region = var.region }))
   aws_virtual_private_gateway_route_propagations = yamldecode(templatefile("../../configs/cross-cloud/aws/virtual-private-gateway-route-propagations.yaml", { environment = var.environment, region = var.region }))
   aws_load_balancers                             = yamldecode(templatefile("../../configs/cross-cloud/aws/load-balancers.yaml", { environment = var.environment, region = var.region }))
+  aws_vpc_endpoint_services                      = yamldecode(templatefile("../../configs/cross-cloud/aws/vpc-endpoints-services.yaml", { environment = var.environment, region = var.region }))
 }
 
 //-----------------------------------
