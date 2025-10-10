@@ -1,15 +1,4 @@
 //-----------------------------------
-// DB Subnet Group
-//-----------------------------------
-variable "subnet_group_name" {
-  type = string
-}
-
-variable "subnet_ids" {
-  type = list(string)
-}
-
-//-----------------------------------
 // RDS Instance
 //-----------------------------------
 variable "allocated_storage" {
@@ -44,7 +33,6 @@ variable "instance_class" {
   type = string
 }
 
-
 variable "max_allocated_storage" {
   type = number
 }
@@ -55,6 +43,10 @@ variable "parameter_group_name" {
 
 variable "skip_final_snapshot" {
   type = bool
+}
+
+variable "subnet_group_name" {
+  type = string
 }
 
 variable "storage_encrypted" {

@@ -7,25 +7,13 @@ resource "random_password" "this" {
 }
 
 //-----------------------------------
-// DB Subnet Group
-//-----------------------------------
-resource "aws_db_subnet_group" "this" {
-  name       = var.subnet_group_name
-  subnet_ids = var.subnet_ids
-
-  tags = {
-    Name = var.subnet_group_name
-  }
-}
-
-//-----------------------------------
 // RDS Instance
 //-----------------------------------
 resource "aws_db_instance" "this" {
   allocated_storage                   = var.allocated_storage
   apply_immediately                   = var.apply_immediately
   copy_tags_to_snapshot               = var.copy_tags_to_snapshot
-  db_subnet_group_name                = aws_db_subnet_group.this.name
+  db_subnet_group_name                = var.subnet_group_name
   engine                              = var.engine
   engine_version                      = var.engine_version
   iam_database_authentication_enabled = var.iam_database_authentication_enabled
