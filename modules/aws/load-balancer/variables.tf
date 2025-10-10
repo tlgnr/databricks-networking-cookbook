@@ -25,6 +25,9 @@ variable "subnets" {
   type = list(string)
 }
 
-variable "vpc_name" {
-  type = string
+//-----------------------------------
+// Load Balancer Target Group
+//-----------------------------------
+variable "target_groups" {
+  type = map(map(string))
 }
