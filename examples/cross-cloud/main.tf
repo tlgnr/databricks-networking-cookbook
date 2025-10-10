@@ -603,15 +603,25 @@ module "azure_databricks_catalog" {
 module "aws_load_balancer" {
   source = "../../modules/aws/load-balancer"
 
+  depends_on = [
+    module.aws_rds_postgresql_instance,
+  ]
+
   for_each = local.aws_load_balancers
 
+  internal           = each.value.internal
+  load_balancer_type = each.value.load_balancer_type
+  name               = each.value.name
+  security_groups    = [for name in each.value.security_group_names : module.aws_security_group[name].id]
+  subnets            = [for name in each.value.subnet_names : module.aws_subnet[name].id]
+  target_groups = {
+    for k, v in each.value.target_groups :
+    k => merge(v, {
+      vpc_id    = module.aws_vpc[v.vpc_name].id
+      target_id = split(":", module.aws_rds_postgresql_instance[v.target_name].endpoint)[0]
+    })
+  }
   enable_deletion_protection = each.value.enable_deletion_protection
-  internal                   = each.value.internal
-  load_balancer_type         = each.value.load_balancer_type
-  security_groups            = [for name in each.value.security_group_names : module.aws_security_group[name].id]
-  subnets                    = [for name in each.value.subnet_names : module.aws_subnet[name].id]
-  vpc_name                   = each.value.vpc_name
-  name                       = each.value.name
 }
 
 //-----------------------------------

@@ -7,9 +7,26 @@ nlb-hub-${environment}-${region}:
   internal: true
   load_balancer_type: network
   name: nlb-hub-${environment}-${region}
+  security_group_names:
+    - sgr-hub-nlb-${environment}-${region}
   subnet_names:
     - subnet-hub-nlb-${environment}-${region}a
     - subnet-hub-nlb-${environment}-${region}b
+  target_groups:
+    postgresql-rds:
+      name: postgresql-rds
+      port: 5432
+      protocol: TCP
+      target_type: ip
+      vpc_name: vpc-hub-${environment}-${region}
+      target_name: rds-hub-postgresql-${environment}-${region}
+      target_port: 5432
+    postgresql-rds-backup:
+      name: postgresql-rds-backup
+      port: 5432
+      protocol: TCP
+      target_type: ip
+      vpc_name: vpc-hub-${environment}-${region}
+      target_name: rds-hub-postgresql-backup-${environment}-${region}
+      target_port: 5432
   vpc_name: vpc-hub-${environment}-${region}
-  security_group_names:
-    - sgr-hub-nlb-${environment}-${region}
