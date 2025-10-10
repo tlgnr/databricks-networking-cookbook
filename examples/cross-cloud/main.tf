@@ -476,29 +476,44 @@ module "azure_private_endpoint" {
 }
 
 //-----------------------------------
+// AWS RDS Subnet Group
+//-----------------------------------
+module "aws_rds_subnet_group" {
+  source = "../../modules/aws/subnet-group"
+
+  for_each = local.aws_rds_subnet_groups
+
+  name       = each.value.name
+  subnet_ids = [for name in each.value.subnet_names : module.aws_subnet[name].id]
+}
+
+//-----------------------------------
 // AWS RDS PostgreSQL Instance
 //-----------------------------------
 module "aws_rds_postgresql_instance" {
   source = "../../modules/aws/rds-instance"
 
+  depends_on = [
+    module.aws_rds_subnet_group,
+  ]
+
   for_each = local.aws_rds_postgresql_instances
 
-  identifier                          = each.value.identifier
   allocated_storage                   = each.value.allocated_storage
-  engine                              = each.value.engine
   apply_immediately                   = each.value.apply_immediately
+  copy_tags_to_snapshot               = each.value.copy_tags_to_snapshot
+  engine                              = each.value.engine
   engine_version                      = each.value.engine_version
+  iam_database_authentication_enabled = each.value.iam_database_authentication_enabled
   instance_class                      = each.value.instance_class
-  username                            = each.value.username
+  max_allocated_storage               = each.value.max_allocated_storage
   parameter_group_name                = each.value.parameter_group_name
   skip_final_snapshot                 = each.value.skip_final_snapshot
   storage_encrypted                   = each.value.storage_encrypted
-  max_allocated_storage               = each.value.max_allocated_storage
-  iam_database_authentication_enabled = each.value.iam_database_authentication_enabled
-  copy_tags_to_snapshot               = each.value.copy_tags_to_snapshot
-  vpc_security_group_ids              = [for name in each.value.vpc_security_group_names : module.aws_security_group[name].id]
   subnet_group_name                   = each.value.subnet_group_name
-  subnet_ids                          = [for name in each.value.subnet_names : module.aws_subnet[name].id]
+  username                            = each.value.username
+  vpc_security_group_ids              = [for name in each.value.vpc_security_group_names : module.aws_security_group[name].id]
+  identifier                          = each.value.identifier
 }
 
 //-----------------------------------
