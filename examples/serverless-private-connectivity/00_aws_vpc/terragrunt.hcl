@@ -2,7 +2,7 @@
 // Terraform
 //-----------------------------------
 terraform {
-  source = "../../../stacks/vpc"
+  source = "${get_repo_root()}/stacks/aws/vpc"
 }
 
 //-----------------------------------

@@ -1,0 +1,9 @@
+---
+#-----------------------------------
+# RDS
+#-----------------------------------
+sgr-hub-rds-${environment}-${region}:
+  name: sgr-hub-rds-${environment}-${region}
+  subnet_names:
+    - subnet-hub-rds-${environment}-${region}a
+    - subnet-hub-rds-${environment}-${region}b
