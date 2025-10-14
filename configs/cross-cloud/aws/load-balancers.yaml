@@ -1,10 +1,20 @@
 ---
 #-----------------------------------
-# Databricks
+# Hub Load Balancer
 #-----------------------------------
 nlb-hub-${environment}-${region}:
+  enable_cross_zone_load_balancing: true
   enable_deletion_protection: false
   internal: true
+  listeners:
+    postgresql-rds:
+      port: 5432
+      protocol: TCP
+      target_group_name: postgresql-rds
+    postgresql-backup-rds:
+      port: 65533
+      protocol: TCP
+      target_group_name: postgresql-backup-rds
   load_balancer_type: network
   name: nlb-hub-${environment}-${region}
   security_group_names:
@@ -17,16 +27,16 @@ nlb-hub-${environment}-${region}:
       name: postgresql-rds
       port: 5432
       protocol: TCP
-      target_type: ip
-      vpc_name: vpc-hub-${environment}-${region}
       target_name: rds-hub-postgresql-${environment}-${region}
       target_port: 5432
-    postgresql-rds-backup:
-      name: postgresql-rds-backup
-      port: 5432
-      protocol: TCP
       target_type: ip
       vpc_name: vpc-hub-${environment}-${region}
+    postgresql-backup-rds:
+      name: postgresql-backup-rds
+      port: 5432
+      protocol: TCP
       target_name: rds-hub-postgresql-backup-${environment}-${region}
       target_port: 5432
+      target_type: ip
+      vpc_name: vpc-hub-${environment}-${region}
   vpc_name: vpc-hub-${environment}-${region}

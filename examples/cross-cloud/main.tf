@@ -609,19 +609,21 @@ module "aws_load_balancer" {
 
   for_each = local.aws_load_balancers
 
-  internal           = each.value.internal
-  load_balancer_type = each.value.load_balancer_type
-  name               = each.value.name
-  security_groups    = [for name in each.value.security_group_names : module.aws_security_group[name].id]
-  subnets            = [for name in each.value.subnet_names : module.aws_subnet[name].id]
+  enable_cross_zone_load_balancing = each.value.enable_cross_zone_load_balancing
+  enable_deletion_protection       = each.value.enable_deletion_protection
+  internal                         = each.value.internal
+  listeners                        = each.value.listeners
+  load_balancer_type               = each.value.load_balancer_type
+  name                             = each.value.name
+  security_groups                  = [for name in each.value.security_group_names : module.aws_security_group[name].id]
+  subnets                          = [for name in each.value.subnet_names : module.aws_subnet[name].id]
+
   target_groups = {
-    for k, v in each.value.target_groups :
-    k => merge(v, {
+    for k, v in each.value.target_groups : k => merge(v, {
       vpc_id    = module.aws_vpc[v.vpc_name].id
       target_id = split(":", module.aws_rds_postgresql_instance[v.target_name].endpoint)[0]
     })
   }
-  enable_deletion_protection = each.value.enable_deletion_protection
 }
 
 //-----------------------------------
@@ -634,8 +636,8 @@ module "aws_vpc_endpoint_service" {
 
   acceptance_required        = each.value.acceptance_required
   allowed_principals         = each.value.allowed_principals
-  network_load_balancer_arns = [for name in each.value.network_load_balancer_names : module.aws_load_balancer[name].arn]
   name                       = each.value.name
+  network_load_balancer_arns = [for name in each.value.network_load_balancer_names : module.aws_load_balancer[name].arn]
 }
 
 
