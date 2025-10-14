@@ -2,12 +2,13 @@
 // Load Balancer
 //-----------------------------------
 resource "aws_lb" "this" {
-  name                       = var.name
-  internal                   = var.internal
-  load_balancer_type         = var.load_balancer_type
-  subnets                    = var.subnets
-  enable_deletion_protection = var.enable_deletion_protection
-  security_groups            = var.security_groups
+  name                             = var.name
+  internal                         = var.internal
+  load_balancer_type               = var.load_balancer_type
+  subnets                          = var.subnets
+  enable_deletion_protection       = var.enable_deletion_protection
+  enable_cross_zone_load_balancing = var.enable_cross_zone_load_balancing
+  security_groups                  = var.security_groups
 
   tags = {
     Name = var.name
@@ -48,4 +49,20 @@ resource "aws_lb_target_group_attachment" "this" {
   target_group_arn = aws_lb_target_group.this[each.value.name].arn
   target_id        = data.dns_a_record_set.this[each.value.name].addrs[0]
   port             = each.value.target_port
+}
+
+//-----------------------------------
+// Listener
+//-----------------------------------
+resource "aws_lb_listener" "this" {
+  for_each = var.listeners
+
+  load_balancer_arn = aws_lb.this.arn
+  port              = each.value.port
+  protocol          = each.value.protocol
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.this[each.value.target_group_name].arn
+  }
 }
