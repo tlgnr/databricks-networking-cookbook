@@ -11,12 +11,12 @@ module "aws_rds_subnet_group" {
 }
 
 //-----------------------------------
-// AWS RDS PostgreSQL Instances
+// AWS RDS Instances
 //-----------------------------------
-module "aws_rds_postgresql_instance" {
+module "aws_rds_instance" {
   source = "../../../../../../modules/aws/rds-instance"
 
-  for_each = var.aws_rds_postgresql_instances
+  for_each = var.aws_rds_instances
 
   allocated_storage                   = each.value.allocated_storage
   apply_immediately                   = each.value.apply_immediately

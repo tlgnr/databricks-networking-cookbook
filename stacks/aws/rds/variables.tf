@@ -31,9 +31,9 @@ variable "aws_subnet_groups" {
 }
 
 //-----------------------------------
-// AWS RDS PostgreSQL Instances
+// AWS RDS Instances
 //-----------------------------------
-variable "aws_rds_postgresql_instances" {
+variable "aws_rds_instances" {
   type = map(object({
     allocated_storage                   = number
     apply_immediately                   = bool
