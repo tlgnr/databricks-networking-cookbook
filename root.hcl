@@ -9,18 +9,18 @@ locals {
 // Providers Generation
 //-----------------------------------
 generate "providers" {
-  path                 = "providers.tf"
-  if_exists            = "overwrite"
-  contents             = file("${get_terragrunt_dir()}/providers.tf")
+  path      = "providers.tf"
+  if_exists = "overwrite"
+  contents  = file("${get_terragrunt_dir()}/providers.tf")
 }
 
 //-----------------------------------
 // Versions Generation
 //-----------------------------------
 generate "versions" {
-  path                 = "versions.tf"
-  if_exists            = "overwrite"
-  contents             = <<EOF
+  path      = "versions.tf"
+  if_exists = "overwrite"
+  contents  = <<EOF
     terraform {
       required_providers {
         aws = {
