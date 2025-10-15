@@ -41,7 +41,7 @@ resource "aws_security_group" "this" {
 }
 
 //-----------------------------------
-// Prefix Lists
+// Prefix List
 //-----------------------------------
 data "aws_ec2_managed_prefix_list" "s3" {
   name = "com.amazonaws.${var.region}.s3"
