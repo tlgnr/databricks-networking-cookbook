@@ -23,19 +23,19 @@ module "aws_elastic_load_balancer" {
   }
 }
 
-# //-----------------------------------
-# // AWS VPC Endpoint Service 
-# //-----------------------------------
-# module "aws_vpc_endpoint_service" {
-#   source = "../../modules/aws/vpc-endpoint-service"
+//-----------------------------------
+// AWS VPC Endpoint Service 
+//-----------------------------------
+module "aws_vpc_endpoint_service" {
+  source = "../../../../../../modules/aws/vpc-endpoint-service"
 
-#   for_each = local.aws_vpc_endpoint_services
+  for_each = var.aws_vpc_endpoint_services
 
-#   acceptance_required        = each.value.acceptance_required
-#   allowed_principals         = each.value.allowed_principals
-#   name                       = each.value.name
-#   network_load_balancer_arns = [for name in each.value.network_load_balancer_names : module.aws_load_balancer[name].arn]
-# }
+  acceptance_required        = each.value.acceptance_required
+  allowed_principals         = each.value.allowed_principals
+  name                       = each.value.name
+  network_load_balancer_arns = [for elastic_load_balancer_name in each.value.elastic_load_balancer_names : module.aws_elastic_load_balancer[elastic_load_balancer_name].arn]
+}
 
 
 

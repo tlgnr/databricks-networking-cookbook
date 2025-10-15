@@ -55,3 +55,15 @@ variable "aws_elastic_load_balancers" {
     }))
   }))
 }
+
+//-----------------------------------
+// AWS VPC Endpoint Services
+//-----------------------------------
+variable "aws_vpc_endpoint_services" {
+  type = map(object({
+    acceptance_required         = bool
+    allowed_principals          = list(string)
+    name                        = string
+    elastic_load_balancer_names = list(string)
+  }))
+}
