@@ -41,7 +41,7 @@ inputs = {
     environment = local.env_vars.locals.environment
     region      = local.env_vars.locals.region
   }))
-  aws_rds_postgresql_instances = yamldecode(templatefile("../../../configs/serverless-private-connectivity/aws/rds-postgresql-instances.yaml", {
+  aws_rds_instances = yamldecode(templatefile("../../../configs/serverless-private-connectivity/aws/rds-instances.yaml", {
     environment = local.env_vars.locals.environment
     region      = local.env_vars.locals.region
   }))
