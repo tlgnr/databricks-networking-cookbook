@@ -1,5 +1,5 @@
 //-----------------------------------
-// Load Balancer
+// Elastic Load Balancer
 //-----------------------------------
 resource "aws_lb" "this" {
   name                             = var.name
@@ -37,7 +37,8 @@ resource "aws_lb_target_group" "this" {
 //-----------------------------------
 data "dns_a_record_set" "this" {
   for_each = var.target_groups
-  host     = each.value.target_id
+
+  host = each.value.target_id
 }
 
 //-----------------------------------
@@ -48,7 +49,7 @@ resource "aws_lb_target_group_attachment" "this" {
 
   target_group_arn = aws_lb_target_group.this[each.value.name].arn
   target_id        = data.dns_a_record_set.this[each.value.name].addrs[0]
-  port             = each.value.target_port
+  port             = each.value.port
 }
 
 //-----------------------------------

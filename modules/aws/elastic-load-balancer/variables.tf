@@ -1,5 +1,5 @@
 //-----------------------------------
-// Load Balancer
+// Elastic Load Balancer
 //-----------------------------------
 variable "enable_cross_zone_load_balancing" {
   type = bool
@@ -30,15 +30,28 @@ variable "subnets" {
 }
 
 //-----------------------------------
-// Load Balancer Target Group
+// Target Group
 //-----------------------------------
 variable "target_groups" {
-  type = map(map(string))
+  type = map(object({
+    name        = string
+    port        = number
+    protocol    = string
+    target_id   = string
+    target_name = string
+    target_type = string
+    vpc_id      = string
+    vpc_name    = string
+  }))
 }
 
 //-----------------------------------
-// Load Balancer Listener
+// Listener
 //-----------------------------------
 variable "listeners" {
-  type = map(map(string))
+  type = map(object({
+    port              = number
+    protocol          = string
+    target_group_name = string
+  }))
 }
