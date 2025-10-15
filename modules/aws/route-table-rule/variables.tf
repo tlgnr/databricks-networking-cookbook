@@ -21,11 +21,6 @@ variable "nat_gateway_id" {
   default = null
 }
 
-variable "network_interface_id" {
-  type    = string
-  default = null
-}
-
 variable "route_table_id" {
   type = string
 }
