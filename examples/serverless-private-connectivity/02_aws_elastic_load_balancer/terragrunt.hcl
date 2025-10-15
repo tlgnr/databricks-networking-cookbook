@@ -20,6 +20,17 @@ include "env" {
 }
 
 //-----------------------------------
+// Dependencies
+//-----------------------------------
+dependency "aws_vpc" {
+  config_path = "../00_aws_vpc"
+}
+
+dependency "aws_rds" {
+  config_path = "../01_aws_rds"
+}
+
+//-----------------------------------
 // Locals
 //-----------------------------------
 locals {
@@ -30,4 +41,12 @@ locals {
 // Inputs
 //-----------------------------------
 inputs = {
+  aws_elastic_load_balancers = yamldecode(templatefile("../../../configs/serverless-private-connectivity/aws/elastic-load-balancers.yaml", {
+    environment = local.env_vars.locals.environment
+    region      = local.env_vars.locals.region
+  }))
+  aws_subnet_ids             = dependency.aws_vpc.outputs.aws_subnet_ids
+  aws_security_group_ids     = dependency.aws_vpc.outputs.aws_security_group_ids
+  aws_rds_instance_endpoints = dependency.aws_rds.outputs.aws_rds_instances
+  aws_vpc_ids                = dependency.aws_vpc.outputs.aws_vpc_ids
 }

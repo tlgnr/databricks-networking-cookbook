@@ -1,0 +1,40 @@
+---
+#-----------------------------------
+# Network Load Balancer
+#-----------------------------------
+nlb-hub-${environment}-${region}:
+  enable_cross_zone_load_balancing: true
+  enable_deletion_protection: false
+  internal: true
+  listeners:
+    postgresql-primary:
+      port: 5432
+      protocol: TCP
+      target_group_name: postgresql-primary
+    postgresql-secondary:
+      port: 5433
+      protocol: TCP
+      target_group_name: postgresql-secondary
+  load_balancer_type: network
+  name: nlb-hub-${environment}-${region}
+  security_group_names:
+    - sgr-hub-nlb-${environment}-${region}
+  subnet_names:
+    - subnet-hub-nlb-${environment}-${region}a
+    - subnet-hub-nlb-${environment}-${region}b
+  target_groups:
+    postgresql-primary:
+      name: postgresql-primary
+      port: 5432
+      protocol: TCP
+      target_name: rds-hub-postgresql-primary-${environment}-${region}
+      target_type: ip
+      vpc_name: vpc-hub-${environment}-${region}
+    postgresql-secondary:
+      name: postgresql-secondary
+      port: 5432
+      protocol: TCP
+      target_name: rds-hub-postgresql-secondary-${environment}-${region}
+      target_type: ip
+      vpc_name: vpc-hub-${environment}-${region}
+  vpc_name: vpc-hub-${environment}-${region}
