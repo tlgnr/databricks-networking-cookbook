@@ -45,6 +45,10 @@ inputs = {
     environment = local.env_vars.locals.environment
     region      = local.env_vars.locals.region
   }))
+  aws_vpc_endpoint_services = yamldecode(templatefile("../../../configs/serverless-private-connectivity/aws/vpc-endpoints-services.yaml", {
+    environment = local.env_vars.locals.environment
+    region      = local.env_vars.locals.region
+  }))
   aws_subnet_ids             = dependency.aws_vpc.outputs.aws_subnet_ids
   aws_security_group_ids     = dependency.aws_vpc.outputs.aws_security_group_ids
   aws_rds_instance_endpoints = dependency.aws_rds.outputs.aws_rds_instances

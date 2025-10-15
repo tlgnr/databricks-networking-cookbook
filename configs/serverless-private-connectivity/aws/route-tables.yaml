@@ -1,11 +1,18 @@
 ---
 #-----------------------------------
-# Private
+# Private AZ1
 #-----------------------------------
-rt-hub-private-${environment}-${region}:
-  name: rt-hub-private-${environment}-${region}
+rt-hub-private-${environment}-${region}a:
+  name: rt-hub-private-${environment}-${region}a
   subnet_names:
     - subnet-hub-private-${environment}-${region}a
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# Private AZ2
+#-----------------------------------
+rt-hub-private-${environment}-${region}b:
+  name: rt-hub-private-${environment}-${region}b
+  subnet_names:
     - subnet-hub-private-${environment}-${region}b
   vpc_name: vpc-hub-${environment}-${region}
 #-----------------------------------

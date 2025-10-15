@@ -1,0 +1,90 @@
+---
+#-----------------------------------
+# S3
+#-----------------------------------
+ept-hub-s3-gateway-${environment}-${region}:
+  name: ept-hub-s3-gateway-${environment}-${region}
+  private_dns_enabled: true
+  route_table_names:
+    - rt-hub-private-${environment}-${region}a
+    - rt-hub-private-${environment}-${region}b
+  security_group_names: null
+  service: s3
+  service_name: null
+  service_regions:
+    - ${region}
+  service_type: Gateway
+  subnet_names: null
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# STS
+#-----------------------------------
+ept-hub-sts-interface-${environment}-${region}:
+  name: ept-hub-sts-interface-${environment}-${region}
+  private_dns_enabled: true
+  route_table_names: null
+  security_group_names:
+    - sgr-hub-endpoints-${environment}-${region}
+  service: sts
+  service_name: null
+  service_regions:
+    - ${region}
+  service_type: Interface
+  subnet_names:
+    - subnet-hub-endpoints-${environment}-${region}a
+    - subnet-hub-endpoints-${environment}-${region}b
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# Kinesis Streams
+#-----------------------------------
+ept-hub-kinesis-interface-${environment}-${region}:
+  name: ept-hub-kinesis-interface-${environment}-${region}
+  private_dns_enabled: true
+  route_table_names: null
+  security_group_names:
+    - sgr-hub-endpoints-${environment}-${region}
+  service: kinesis-streams
+  service_name: null
+  service_regions:
+    - ${region}
+  service_type: Interface
+  subnet_names:
+    - subnet-hub-endpoints-${environment}-${region}a
+    - subnet-hub-endpoints-${environment}-${region}b
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# Dataplane Relay
+#-----------------------------------
+ept-hub-relay-interface-${environment}-${region}:
+  name: ept-hub-relay-interface-${environment}-${region}
+  private_dns_enabled: true
+  route_table_names: null
+  security_group_names:
+    - sgr-hub-endpoints-${environment}-${region}
+  service: null
+  service_name: com.amazonaws.vpce.us-east-1.vpce-svc-00018a8c3ff62ffdf
+  service_regions:
+    - ${region}
+  service_type: Interface
+  subnet_names:
+    - subnet-hub-endpoints-${environment}-${region}a
+    - subnet-hub-endpoints-${environment}-${region}b
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
+# Rest API
+#-----------------------------------
+ept-hub-rest-interface-${environment}-${region}:
+  name: ept-hub-rest-interface-${environment}-${region}
+  private_dns_enabled: true
+  route_table_names: null
+  security_group_names:
+    - sgr-hub-endpoints-${environment}-${region}
+  service: null
+  service_name: com.amazonaws.vpce.us-east-1.vpce-svc-09143d1e626de2f04
+  service_regions:
+    - ${region}
+  service_type: Interface
+  subnet_names:
+    - subnet-hub-endpoints-${environment}-${region}a
+    - subnet-hub-endpoints-${environment}-${region}b
+  vpc_name: vpc-hub-${environment}-${region}

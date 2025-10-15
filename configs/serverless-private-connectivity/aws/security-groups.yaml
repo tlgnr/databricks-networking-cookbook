@@ -1,5 +1,44 @@
 ---
 #-----------------------------------
+# Endpoints
+#-----------------------------------
+sgr-hub-endpoints-${environment}-${region}:
+  description: Security group for VPC endpoints
+  name: sgr-hub-endpoints-${environment}-${region}
+  security_group_egress_rules:
+    - cidr_ipv4: 0.0.0.0/0
+      from_port: -1
+      ip_protocol: -1
+      prefix_list: null
+      to_port: -1
+  security_group_ingress_rules:
+    - cidr_ipv4: 10.0.0.0/16
+      from_port: 443
+      ip_protocol: tcp
+      prefix_list: null
+      to_port: 443
+    - cidr_ipv4: 10.0.0.0/16
+      from_port: 6666
+      ip_protocol: tcp
+      prefix_list: null
+      to_port: 6666
+    - cidr_ipv4: 10.0.0.0/16
+      from_port: 3306
+      ip_protocol: tcp
+      prefix_list: null
+      to_port: 3306
+    - cidr_ipv4: 10.0.0.0/16
+      from_port: 8443
+      ip_protocol: tcp
+      prefix_list: null
+      to_port: 8451
+    - cidr_ipv4: null
+      from_port: 443
+      ip_protocol: tcp
+      prefix_list: s3
+      to_port: 443
+  vpc_name: vpc-hub-${environment}-${region}
+#-----------------------------------
 # Public
 #-----------------------------------
 sgr-hub-public-${environment}-${region}:

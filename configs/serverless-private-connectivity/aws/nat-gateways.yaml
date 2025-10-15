@@ -1,0 +1,13 @@
+---
+#-----------------------------------
+# NAT Gateway AZ1
+#-----------------------------------
+ngw-hub-${environment}-${region}a:
+  name: ngw-hub-${environment}-${region}a
+  subnet_name: subnet-hub-nat-${environment}-${region}a
+#-----------------------------------
+# NAT Gateway AZ2
+#-----------------------------------
+ngw-hub-${environment}-${region}b:
+  name: ngw-hub-${environment}-${region}b
+  subnet_name: subnet-hub-nat-${environment}-${region}b

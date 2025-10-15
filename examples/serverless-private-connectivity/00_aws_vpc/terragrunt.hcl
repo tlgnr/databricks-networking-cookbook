@@ -38,6 +38,10 @@ inputs = {
     environment = local.env_vars.locals.environment
     region      = local.env_vars.locals.region
   }))
+  aws_nat_gateways = yamldecode(templatefile("../../../configs/serverless-private-connectivity/aws/nat-gateways.yaml", {
+    environment = local.env_vars.locals.environment
+    region      = local.env_vars.locals.region
+  }))
   aws_route_tables = yamldecode(templatefile("../../../configs/serverless-private-connectivity/aws/route-tables.yaml", {
     environment = local.env_vars.locals.environment
     region      = local.env_vars.locals.region
@@ -51,6 +55,10 @@ inputs = {
     region      = local.env_vars.locals.region
   }))
   aws_security_groups = yamldecode(templatefile("../../../configs/serverless-private-connectivity/aws/security-groups.yaml", {
+    environment = local.env_vars.locals.environment
+    region      = local.env_vars.locals.region
+  }))
+  aws_vpc_endpoints = yamldecode(templatefile("../../../configs/serverless-private-connectivity/aws/vpc-endpoints.yaml", {
     environment = local.env_vars.locals.environment
     region      = local.env_vars.locals.region
   }))

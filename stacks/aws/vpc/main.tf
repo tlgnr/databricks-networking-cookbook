@@ -25,6 +25,18 @@ module "aws_internet_gateway" {
 }
 
 //-----------------------------------
+// AWS NAT Gateways
+//-----------------------------------
+module "aws_nat_gateway" {
+  source = "../../../../../../modules/aws/nat-gateway"
+
+  for_each = var.aws_nat_gateways
+
+  name      = each.value.name
+  subnet_id = module.aws_subnet[each.value.subnet_name].id
+}
+
+//-----------------------------------
 // AWS Route Tables
 //-----------------------------------
 module "aws_route_table" {
@@ -45,7 +57,8 @@ module "aws_route_table_rule" {
   for_each = var.aws_route_table_rules
 
   destination_cidr_block = each.value.destination_cidr_block
-  gateway_id             = module.aws_internet_gateway[each.value.internet_gateway_name].id
+  gateway_id             = try(module.aws_internet_gateway[each.value.internet_gateway_name].id, null)
+  nat_gateway_id         = try(module.aws_nat_gateway[each.value.nat_gateway_name].id, null)
   route_table_id         = module.aws_route_table[each.value.route_table_name].id
 }
 
@@ -78,4 +91,24 @@ module "aws_security_group" {
   security_group_egress_rules  = each.value.security_group_egress_rules
   security_group_ingress_rules = each.value.security_group_ingress_rules
   vpc_id                       = module.aws_vpc[each.value.vpc_name].id
+}
+
+//-----------------------------------
+// AWS VPC Endpoints
+//-----------------------------------
+module "aws_vpc_endpoint" {
+  source = "../../../../../../modules/aws/vpc-endpoint"
+
+  for_each = var.aws_vpc_endpoints
+
+  name                = each.value.name
+  private_dns_enabled = each.value.private_dns_enabled
+  route_table_ids     = try([for route_table_name in each.value.route_table_names : module.aws_route_table[route_table_name].id], null)
+  security_group_ids  = try([for security_group_name in each.value.security_group_names : module.aws_security_group[security_group_name].id], null)
+  service             = each.value.service
+  service_name        = each.value.service_name
+  service_regions     = each.value.service_regions
+  service_type        = each.value.service_type
+  subnet_ids          = try([for subnet_name in each.value.subnet_names : module.aws_subnet[subnet_name].id], null)
+  vpc_id              = module.aws_vpc[each.value.vpc_name].id
 }
