@@ -1,4 +1,11 @@
 //-----------------------------------
+// AWS Security Groups
+//-----------------------------------
+output "aws_security_group_ids" {
+  value = module.aws_security_group
+}
+
+//-----------------------------------
 // AWS Subnets
 //-----------------------------------
 output "aws_subnet_ids" {
@@ -6,8 +13,8 @@ output "aws_subnet_ids" {
 }
 
 //-----------------------------------
-// AWS Security Groups
+// AWS VPCs
 //-----------------------------------
-output "aws_security_group_ids" {
-  value = module.aws_security_group
+output "aws_vpc_ids" {
+  value = module.aws_vpc
 }
