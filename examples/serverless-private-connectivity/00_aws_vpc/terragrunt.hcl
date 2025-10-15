@@ -62,4 +62,5 @@ inputs = {
     environment = local.env_vars.locals.environment
     region      = local.env_vars.locals.region
   }))
+  tags = merge(local.env_vars.locals.tags, { Owner = get_env("OWNER", "Databricks"), Module = basename(dirname(get_terragrunt_dir())) })
 }

@@ -47,4 +47,5 @@ inputs = {
   }))
   aws_subnet_ids         = dependency.aws_vpc.outputs.aws_subnet_ids
   aws_security_group_ids = dependency.aws_vpc.outputs.aws_security_group_ids
+  tags                   = merge(local.env_vars.locals.tags, { Owner = get_env("OWNER", "Databricks"), Module = basename(dirname(get_terragrunt_dir())) })
 }
