@@ -59,7 +59,6 @@ variable "aws_route_table_rules" {
     destination_cidr_block = string
     internet_gateway_name  = optional(string, null)
     nat_gateway_name       = optional(string, null)
-    network_interface_id   = optional(string, null)
     route_table_name       = string
   }))
 }
