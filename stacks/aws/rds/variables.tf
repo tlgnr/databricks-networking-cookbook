@@ -12,7 +12,11 @@ variable "tags" {
 //-----------------------------------
 // Dependencies
 //-----------------------------------
-variable "subnet_ids" {
+variable "aws_security_group_ids" {
+  type = map(map(string))
+}
+
+variable "aws_subnet_ids" {
   type = map(map(string))
 }
 
@@ -23,5 +27,28 @@ variable "aws_subnet_groups" {
   type = map(object({
     name         = string
     subnet_names = list(string)
+  }))
+}
+
+//-----------------------------------
+// AWS RDS PostgreSQL Instances
+//-----------------------------------
+variable "aws_rds_postgresql_instances" {
+  type = map(object({
+    allocated_storage                   = number
+    apply_immediately                   = bool
+    copy_tags_to_snapshot               = bool
+    engine                              = string
+    engine_version                      = string
+    iam_database_authentication_enabled = bool
+    identifier                          = string
+    instance_class                      = string
+    max_allocated_storage               = number
+    parameter_group_name                = string
+    skip_final_snapshot                 = bool
+    storage_encrypted                   = bool
+    subnet_group_name                   = string
+    username                            = string
+    vpc_security_group_names            = list(string)
   }))
 }
