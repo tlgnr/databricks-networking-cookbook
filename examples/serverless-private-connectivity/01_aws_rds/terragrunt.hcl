@@ -20,7 +20,7 @@ include "env" {
 }
 
 //-----------------------------------
-// Dependency
+// Dependencies
 //-----------------------------------
 dependency "aws_vpc" {
   config_path = "../00_aws_vpc"
@@ -41,5 +41,10 @@ inputs = {
     environment = local.env_vars.locals.environment
     region      = local.env_vars.locals.region
   }))
-  subnet_ids = dependency.aws_vpc.outputs.subnet_ids
+  aws_rds_postgresql_instances = yamldecode(templatefile("../../../configs/serverless-private-connectivity/aws/rds-postgresql-instances.yaml", {
+    environment = local.env_vars.locals.environment
+    region      = local.env_vars.locals.region
+  }))
+  aws_subnet_ids         = dependency.aws_vpc.outputs.aws_subnet_ids
+  aws_security_group_ids = dependency.aws_vpc.outputs.aws_security_group_ids
 }
