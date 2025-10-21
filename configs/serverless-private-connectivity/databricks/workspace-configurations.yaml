@@ -1,0 +1,18 @@
+---
+#-----------------------------------
+# Workload
+#-----------------------------------
+adb-workload-${environment}-${region}:
+  credential_configuration_name: cc-workload-${environment}-${region}
+  delta_sharing_organization_name: aws
+  metastore_name: metastore-${region}
+  network_configuration_name: nc-workload-${environment}-${region}
+  pricing_tier: ENTERPRISE
+  private_access_setting_name: pc-workload-${environment}-${region}
+  public_access_enabled: true
+  root_bucket:
+    bucket: s3-databricks-workload-${environment}-${region}
+    force_destroy: true
+  storage_configuration_name: sc-workload-${environment}-${region}
+  vpc_name: vpc-databricks-${environment}-${region}
+  workspace_name: adb-workload-${environment}-${region}

@@ -1,0 +1,11 @@
+---
+#-----------------------------------
+# us-east-1
+#-----------------------------------
+metastore-${region}:
+  force_destroy: true
+  name: metastore-${region}
+  owner: null
+  region: ${region}
+  storage_account_name: null
+  storage_container_name: null

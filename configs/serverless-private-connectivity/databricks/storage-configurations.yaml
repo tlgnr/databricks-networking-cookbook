@@ -1,0 +1,8 @@
+---
+#-----------------------------------
+# Workload
+#-----------------------------------
+sc-workload-${environment}-${region}:
+  bucket: s3-databricks-workload-${environment}-${region}
+  force_destroy: true
+  storage_configuration_name: sc-workload-${environment}-${region}
