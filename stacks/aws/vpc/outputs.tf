@@ -18,3 +18,10 @@ output "aws_subnet_ids" {
 output "aws_vpc_ids" {
   value = module.aws_vpc
 }
+
+//-----------------------------------
+// AWS VPC Endpoints
+//-----------------------------------
+output "aws_vpc_endpoint_ids" {
+  value = module.aws_vpc_endpoint
+}
