@@ -17,124 +17,119 @@ module "databricks_credential_configuration" {
   tags                  = var.tags
 }
 
-# //-----------------------------------
-# // Databricks Storage Configurations
-# //-----------------------------------
-# module "databricks_storage_configuration" {
-#   source = "../../../modules/databricks/storage-configuration"
+//-----------------------------------
+// Databricks Storage Configurations
+//-----------------------------------
+module "databricks_storage_configuration" {
+  source = "../../../../../../modules/databricks/storage-configuration"
 
-#   providers = {
-#     aws        = aws
-#     databricks = databricks.account
-#   }
+  providers = {
+    aws        = aws
+    databricks = databricks.account
+  }
 
-#   for_each = local.databricks_storage_configurations
+  for_each = var.databricks_storage_configurations
 
-#   account_id                 = var.databricks_account_id
-#   bucket                     = each.value.bucket
-#   storage_configuration_name = each.value.storage_configuration_name
-#   force_destroy              = each.value.force_destroy
-# }
+  account_id                 = var.databricks_account_id
+  bucket                     = each.value.bucket
+  force_destroy              = each.value.force_destroy
+  storage_configuration_name = each.value.storage_configuration_name
+}
 
-# //-----------------------------------
-# // Databricks Network Configuration
-# //-----------------------------------
-# module "databricks_network_configuration" {
-#   source = "../../../modules/databricks/network-configuration"
+//-----------------------------------
+// Databricks Network Configuration
+//-----------------------------------
+module "databricks_network_configuration" {
+  source = "../../../../../../modules/databricks/network-configuration"
 
-#   providers = {
-#     databricks = databricks.account
-#   }
+  providers = {
+    databricks = databricks.account
+  }
 
-#   for_each = local.databricks_network_configurations
+  for_each = var.databricks_network_configurations
 
-#   account_id               = var.databricks_account_id
-#   region                   = var.region
-#   environment              = var.environment
-#   network_name             = each.key
-#   security_group_ids       = [for _, v in each.value.security_group_names : module.security_group[v].id]
-#   subnet_ids               = [for _, v in each.value.subnet_names : module.subnet[v].id]
-#   vpc_id                   = module.vpc[each.value.vpc_name].id
-#   vpc_endpoint_relay_id    = module.vpc_endpoint["ept-databricks-relay-interface-${var.environment}-${var.region}"].id
-#   vpc_endpoint_rest_api_id = module.vpc_endpoint["ept-databricks-rest-interface-${var.environment}-${var.region}"].id
-# }
+  account_id                   = var.databricks_account_id
+  aws_security_group_ids       = [for security_group_name in each.value.security_group_names : var.aws_security_group_ids[security_group_name].id]
+  aws_subnet_ids               = [for subnet_name in each.value.subnet_names : var.aws_subnet_ids[subnet_name].id]
+  aws_vpc_endpoint_relay_id    = var.aws_vpc_endpoint_ids[each.value.vpc_endpoint_relay_name].id
+  aws_vpc_endpoint_rest_api_id = var.aws_vpc_endpoint_ids[each.value.vpc_endpoint_rest_api_name].id
+  aws_vpc_id                   = var.aws_vpc_ids[each.value.vpc_name].id
+  environment                  = var.environment
+  network_name                 = each.key
+  region                       = var.region
+}
 
-# //-----------------------------------
-# // Databricks Workspace Configuration
-# //-----------------------------------
-# module "databricks_workspace_configuration" {
-#   source = "../../../modules/databricks/workspace-configuration"
+//-----------------------------------
+// Databricks Workspace Configuration
+//-----------------------------------
+module "databricks_workspace_configuration" {
+  source = "../../../../../../modules/databricks/workspace-configuration"
 
-#   providers = {
-#     databricks = databricks.account
-#   }
+  providers = {
+    databricks = databricks.account
+  }
 
-#   for_each = local.databricks_workspace_configurations
+  for_each = var.databricks_workspace_configurations
 
-#   account_id                  = var.databricks_account_id
-#   region                      = var.region
-#   workspace_name              = each.value.name
-#   private_access_setting_name = each.value.private_access_setting_name
-#   credentials_id              = module.databricks_credential_configuration[each.value.credential_configuration_name].id
-#   storage_configuration_id    = module.databricks_storage_configuration[each.value.storage_configuration_name].id
-#   network_id                  = module.databricks_network_configuration[each.value.network_configuration_name].id
-# }
+  account_id                  = var.databricks_account_id
+  credentials_id              = module.databricks_credential_configuration[each.value.credential_configuration_name].id
+  network_id                  = module.databricks_network_configuration[each.value.network_configuration_name].id
+  pricing_tier                = each.value.pricing_tier
+  private_access_setting_name = each.value.private_access_setting_name
+  public_access_enabled       = each.value.public_access_enabled
+  region                      = var.region
+  storage_configuration_id    = module.databricks_storage_configuration[each.value.storage_configuration_name].id
+  workspace_name              = each.value.workspace_name
+}
 
-# # TODO: create a separate config file for this
-# //-----------------------------------
-# // Databricks Metastore
-# //-----------------------------------
-# module "databricks_metastore" {
-#   source = "../../../modules/databricks/metastore"
+//-----------------------------------
+// Databricks Metastore
+//-----------------------------------
+module "databricks_metastore" {
+  source = "../../../../../../modules/databricks/metastore"
 
-#   providers = {
-#     databricks = databricks.account
-#   }
+  providers = {
+    databricks = databricks.account
+  }
 
-#   for_each = local.databricks_workspace_configurations
+  for_each = var.databricks_metastores
 
-#   region                          = var.region
-#   environment                     = var.environment
-#   user_name                       = each.value.user_name
-#   workspace_id                    = module.databricks_workspace_configuration[each.key].id
-#   delta_sharing_organization_name = each.value.delta_sharing_organization_name
-# }
+  name                   = each.value.name
+  force_destroy          = each.value.force_destroy
+  location               = var.region
+  owner                  = each.value.owner
+  storage_account_name   = each.value.storage_account_name
+  storage_container_name = each.value.storage_container_name
+}
 
-# //-----------------------------------
-# // Databricks User Assignments
-# //-----------------------------------
-# module "databricks_user_assignment" {
-#   source = "../../../modules/databricks/user-assignment"
+//-----------------------------------
+// Databricks Metastore Assignment
+//-----------------------------------
+module "databricks_metastore_assignment" {
+  source = "../../../../../../modules/databricks/metastore-assignment"
 
-#   providers = {
-#     databricks = databricks.account
-#   }
+  providers = {
+    databricks = databricks.account
+  }
 
-#   for_each = local.databricks_user_assignments
+  for_each = var.databricks_workspace_configurations
 
-#   user_name    = each.value.user_name
-#   workspace_id = module.databricks_workspace_configuration[each.value.workspace_name].id
-# }
+  workspace_id = module.databricks_workspace_configuration[each.value.workspace_name].id
+  metastore_id = module.databricks_metastore[each.value.metastore_name].id
+}
 
-# //-----------------------------------
-# // Databricks External Location
-# //-----------------------------------
-# module "databricks_external_location" {
-#   source = "../../../modules/databricks/external-location"
+//-----------------------------------
+// Databricks User Assignments
+//-----------------------------------
+module "databricks_user_assignment" {
+  source = "../../../../../../modules/databricks/user-assignment"
 
-#   providers = {
-#     aws        = aws
-#     databricks = databricks.workspace
-#   }
+  providers = {
+    databricks = databricks.account
+  }
 
-#   for_each = local.databricks_external_locations
+  for_each = var.databricks_workspace_configurations
 
-#   databricks_account_id = var.databricks_account_id
-#   metastore_id          = module.databricks_metastore[each.value.workspace_name].id
-#   region                = var.region
-#   role_name             = each.value.role_name
-#   policy_name           = each.value.policy_name
-#   tags                  = var.tags
-#   bucket                = each.value.bucket
-#   force_destroy         = each.value.force_destroy
-# }
+  user_name    = var.tags["Owner"]
+  workspace_id = module.databricks_workspace_configuration[each.value.workspace_name].id
+}

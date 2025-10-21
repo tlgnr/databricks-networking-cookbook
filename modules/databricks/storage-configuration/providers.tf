@@ -7,5 +7,9 @@ terraform {
       source  = "databricks/databricks"
       version = "~> 1.92"
     }
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 5.0"
+    }
   }
 }
