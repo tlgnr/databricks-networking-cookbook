@@ -9,14 +9,8 @@ terraform {
 // Root
 //-----------------------------------
 include "root" {
-  path = find_in_parent_folders("root.hcl")
-}
-
-//-----------------------------------
-// Environment
-//-----------------------------------
-include "env" {
-  path = find_in_parent_folders("env.hcl")
+  path   = find_in_parent_folders("root.hcl")
+  expose = true
 }
 
 //-----------------------------------
@@ -27,25 +21,24 @@ dependency "aws_vpc" {
 }
 
 //-----------------------------------
-// Locals
-//-----------------------------------
-locals {
-  env_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
-}
-
-//-----------------------------------
 // Inputs
 //-----------------------------------
 inputs = {
-  aws_subnet_groups = yamldecode(templatefile("../../../configs/serverless-private-connectivity/aws/subnet-groups.yaml", {
-    environment = local.env_vars.locals.environment
-    region      = local.env_vars.locals.region
+  aws_subnet_groups = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/aws/subnet-groups.yaml", {
+    environment = include.root.locals.environment
+    region      = include.root.locals.region
   }))
-  aws_rds_instances = yamldecode(templatefile("../../../configs/serverless-private-connectivity/aws/rds-instances.yaml", {
-    environment = local.env_vars.locals.environment
-    region      = local.env_vars.locals.region
+  aws_rds_instances = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/aws/rds-instances.yaml", {
+    environment = include.root.locals.environment
+    region      = include.root.locals.region
   }))
   aws_subnet_ids         = dependency.aws_vpc.outputs.aws_subnet_ids
   aws_security_group_ids = dependency.aws_vpc.outputs.aws_security_group_ids
-  tags                   = merge(local.env_vars.locals.tags, { Owner = get_env("OWNER", "Databricks"), Module = basename(dirname(get_terragrunt_dir())) })
+  tags = merge(
+    include.root.locals.tags,
+    {
+      Owner  = get_env("OWNER", "Databricks"),
+      Module = basename(dirname(get_terragrunt_dir())),
+    }
+  )
 }

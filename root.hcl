@@ -1,8 +1,22 @@
-//----------------------------------------------
+//-----------------------------------
 // Locals
-//----------------------------------------------
+//-----------------------------------
 locals {
-  env_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
+  env_vars    = read_terragrunt_config(find_in_parent_folders("env.hcl"))
+  environment = local.env_vars.locals.environment
+  region      = local.env_vars.locals.region
+  location    = local.env_vars.locals.location
+  tags        = local.env_vars.locals.tags
+}
+
+//-----------------------------------
+// Inputs
+//-----------------------------------
+inputs = {
+  environment = local.env_vars.locals.environment
+  region      = local.env_vars.locals.region
+  location    = local.env_vars.locals.location
+  tags        = local.env_vars.locals.tags
 }
 
 //-----------------------------------
@@ -38,13 +52,4 @@ generate "versions" {
       }
   }
   EOF
-}
-
-//----------------------------------------------
-// Variable Configuration
-//----------------------------------------------
-inputs = {
-  environment = local.env_vars.locals.environment
-  region      = local.env_vars.locals.region
-  tags        = local.env_vars.locals.tags
 }

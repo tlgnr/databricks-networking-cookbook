@@ -1,5 +1,5 @@
 //-----------------------------------
-// Root Configuration
+// Environment Configuration
 //-----------------------------------
 locals {
   region      = "us-east-1"
