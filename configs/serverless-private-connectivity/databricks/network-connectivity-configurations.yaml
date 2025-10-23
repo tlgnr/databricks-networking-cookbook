@@ -1,0 +1,7 @@
+---
+#-----------------------------------
+# Workload
+#-----------------------------------
+ncc-workload-${environment}-${region}:
+  name: ncc-workload-${environment}-${region}
+  workspace_name: adb-workload-${environment}-${region}

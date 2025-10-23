@@ -1,0 +1,10 @@
+---
+#-----------------------------------
+# Workload
+#-----------------------------------
+workload:
+  group_names: 
+    - global-admins
+  permissions:
+    - ADMIN
+  workspace_name: adb-workload-${environment}-${region}

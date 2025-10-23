@@ -1,0 +1,9 @@
+#-----------------------------------
+# Global Admins
+#-----------------------------------
+global-admins:
+  display_name: global-admins
+  user_names:
+    - ${owner}
+  service_principal_names:
+    - terraform-service-principal

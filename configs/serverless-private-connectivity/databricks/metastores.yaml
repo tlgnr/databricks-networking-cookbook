@@ -5,7 +5,7 @@
 metastore-${region}:
   force_destroy: true
   name: metastore-${region}
-  owner: null
+  owner: global-admins
   region: ${region}
   storage_account_name: null
   storage_container_name: null

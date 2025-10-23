@@ -9,14 +9,8 @@ terraform {
 // Root
 //-----------------------------------
 include "root" {
-  path = find_in_parent_folders("root.hcl")
-}
-
-//-----------------------------------
-// Environment
-//-----------------------------------
-include "env" {
-  path = find_in_parent_folders("env.hcl")
+  path   = find_in_parent_folders("root.hcl")
+  expose = true
 }
 
 //-----------------------------------
@@ -31,13 +25,6 @@ dependency "aws_rds" {
 }
 
 //-----------------------------------
-// Locals
-//-----------------------------------
-locals {
-  env_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
-}
-
-//-----------------------------------
 // Inputs
 //-----------------------------------
 inputs = {
@@ -48,26 +35,41 @@ inputs = {
   aws_subnet_ids           = dependency.aws_vpc.outputs.aws_subnet_ids
   aws_security_group_ids   = dependency.aws_vpc.outputs.aws_security_group_ids
   aws_vpc_endpoint_ids     = dependency.aws_vpc.outputs.aws_vpc_endpoint_ids
-  databricks_credential_configurations = yamldecode(templatefile("../../../configs/serverless-private-connectivity/databricks/credential-configurations.yaml", {
-    environment = local.env_vars.locals.environment
-    region      = local.env_vars.locals.region
+  databricks_credential_configurations = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/databricks/credential-configurations.yaml", {
+    environment = include.root.locals.environment
+    region      = include.root.locals.region
   }))
-  databricks_storage_configurations = yamldecode(templatefile("../../../configs/serverless-private-connectivity/databricks/storage-configurations.yaml", {
-    environment = local.env_vars.locals.environment
-    region      = local.env_vars.locals.region
+  databricks_storage_configurations = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/databricks/storage-configurations.yaml", {
+    environment = include.root.locals.environment
+    region      = include.root.locals.region
   }))
-  databricks_network_configurations = yamldecode(templatefile("../../../configs/serverless-private-connectivity/databricks/network-configurations.yaml", {
-    environment = local.env_vars.locals.environment
-    region      = local.env_vars.locals.region
+  databricks_network_configurations = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/databricks/network-configurations.yaml", {
+    environment = include.root.locals.environment
+    region      = include.root.locals.region
   }))
-  databricks_workspace_configurations = yamldecode(templatefile("../../../configs/serverless-private-connectivity/databricks/workspace-configurations.yaml", {
-    environment = local.env_vars.locals.environment
-    region      = local.env_vars.locals.region
+  databricks_workspace_configurations = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/databricks/workspace-configurations.yaml", {
+    environment = include.root.locals.environment
+    region      = include.root.locals.region
   }))
-  databricks_metastores = yamldecode(templatefile("../../../configs/serverless-private-connectivity/databricks/metastores.yaml", {
-    region = local.env_vars.locals.region
+  databricks_metastores = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/databricks/metastores.yaml", {
+    region = include.root.locals.region
   }))
-  environment = local.env_vars.locals.environment
-  region      = local.env_vars.locals.region
-  tags        = merge(local.env_vars.locals.tags, { Owner = get_env("OWNER", "Databricks"), Module = basename(dirname(get_terragrunt_dir())) })
+  databricks_ncc_configurations = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/databricks/network-connectivity-configurations.yaml", {
+    environment = include.root.locals.environment
+    region      = include.root.locals.region
+  }))
+  databricks_groups = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/databricks/groups.yaml", {
+    owner = get_env("OWNER", "Databricks"),
+  }))
+  databricks_account_level_permission_assignments = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/databricks/account-level-permission-assignments.yaml", {
+    environment = include.root.locals.environment
+    region      = include.root.locals.region
+  }))
+  tags = merge(
+    include.root.locals.tags,
+    {
+      Owner  = get_env("OWNER", "Databricks"),
+      Module = basename(dirname(get_terragrunt_dir())),
+    }
+  )
 }
