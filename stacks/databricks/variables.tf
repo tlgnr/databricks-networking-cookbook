@@ -93,6 +93,10 @@ variable "databricks_workspace_configurations" {
     public_access_enabled         = bool
     storage_configuration_name    = string
     workspace_name                = string
+    permission_assignments = list(object({
+      group_name  = string
+      permissions = list(string)
+    }))
   }))
 }
 
@@ -107,5 +111,37 @@ variable "databricks_metastores" {
     owner                  = string
     storage_account_name   = string
     storage_container_name = string
+  }))
+}
+
+//-----------------------------------
+// Databricks NCCs
+//-----------------------------------
+variable "databricks_ncc_configurations" {
+  type = map(object({
+    name           = string
+    workspace_name = string
+  }))
+}
+
+//-----------------------------------
+// Databricks Groups
+//-----------------------------------
+variable "databricks_groups" {
+  type = map(object({
+    display_name            = string
+    user_names              = list(string)
+    service_principal_names = list(string)
+  }))
+}
+
+//-----------------------------------
+// Databricks Account Level Permission Assignments
+//-----------------------------------
+variable "databricks_account_level_permission_assignments" {
+  type = map(object({
+    group_names    = list(string)
+    permissions    = list(string)
+    workspace_name = string
   }))
 }

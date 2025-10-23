@@ -37,7 +37,7 @@ module "databricks_storage_configuration" {
 }
 
 //-----------------------------------
-// Databricks Network Configuration
+// Databricks Network Configurations
 //-----------------------------------
 module "databricks_network_configuration" {
   source = "../../../../../../modules/databricks/network-configuration"
@@ -60,7 +60,7 @@ module "databricks_network_configuration" {
 }
 
 //-----------------------------------
-// Databricks Workspace Configuration
+// Databricks Workspace Configurations
 //-----------------------------------
 module "databricks_workspace_configuration" {
   source = "../../../../../../modules/databricks/workspace-configuration"
@@ -83,7 +83,24 @@ module "databricks_workspace_configuration" {
 }
 
 //-----------------------------------
-// Databricks Metastore
+// Databricks Groups
+//-----------------------------------
+module "databricks_group" {
+  source = "../../../../../../modules/databricks/group"
+
+  providers = {
+    databricks = databricks.account
+  }
+
+  for_each = var.databricks_groups
+
+  display_name            = each.value.display_name
+  service_principal_names = each.value.service_principal_names
+  user_names              = each.value.user_names
+}
+
+//-----------------------------------
+// Databricks Metastores
 //-----------------------------------
 module "databricks_metastore" {
   source = "../../../../../../modules/databricks/metastore"
@@ -91,6 +108,10 @@ module "databricks_metastore" {
   providers = {
     databricks = databricks.account
   }
+
+  depends_on = [
+    module.databricks_group,
+  ]
 
   for_each = var.databricks_metastores
 
@@ -103,7 +124,7 @@ module "databricks_metastore" {
 }
 
 //-----------------------------------
-// Databricks Metastore Assignment
+// Databricks Metastore Assignments
 //-----------------------------------
 module "databricks_metastore_assignment" {
   source = "../../../../../../modules/databricks/metastore-assignment"
@@ -119,17 +140,35 @@ module "databricks_metastore_assignment" {
 }
 
 //-----------------------------------
-// Databricks User Assignments
+// Databricks Account Level Permission Assignments
 //-----------------------------------
-module "databricks_user_assignment" {
-  source = "../../../../../../modules/databricks/user-assignment"
+module "databricks_account_level_permission_assignment" {
+  source = "../../../../../../modules/databricks/account-level-permission-assignment"
 
   providers = {
     databricks = databricks.account
   }
 
-  for_each = var.databricks_workspace_configurations
+  for_each = var.databricks_account_level_permission_assignments
 
-  user_name    = var.tags["Owner"]
+  permissions   = each.value.permissions
+  principal_ids = [for group_name in each.value.group_names : module.databricks_group[group_name].id]
+  workspace_id  = module.databricks_workspace_configuration[each.value.workspace_name].id
+}
+
+//-----------------------------------
+// Databricks NCC
+//-----------------------------------
+module "databricks_ncc" {
+  source = "../../../../../../modules/databricks/network-connectivity-configuration"
+
+  providers = {
+    databricks = databricks.account
+  }
+
+  for_each = var.databricks_ncc_configurations
+
+  name         = each.value.name
+  region       = var.region
   workspace_id = module.databricks_workspace_configuration[each.value.workspace_name].id
 }
