@@ -24,17 +24,23 @@ dependency "aws_rds" {
   config_path = "../01_aws_rds"
 }
 
+dependency "aws_elastic_load_balancer" {
+  config_path = "../02_aws_elastic_load_balancer"
+}
+
 //-----------------------------------
 // Inputs
 //-----------------------------------
 inputs = {
-  databricks_account_id    = get_env("DATABRICKS_ACCOUNT_ID")
-  databricks_client_id     = get_env("DATABRICKS_CLIENT_ID")
-  databricks_client_secret = get_env("DATABRICKS_CLIENT_SECRET")
-  aws_vpc_ids              = dependency.aws_vpc.outputs.aws_vpc_ids
-  aws_subnet_ids           = dependency.aws_vpc.outputs.aws_subnet_ids
-  aws_security_group_ids   = dependency.aws_vpc.outputs.aws_security_group_ids
-  aws_vpc_endpoint_ids     = dependency.aws_vpc.outputs.aws_vpc_endpoint_ids
+  databricks_account_id     = get_env("DATABRICKS_ACCOUNT_ID")
+  databricks_client_id      = get_env("DATABRICKS_CLIENT_ID")
+  databricks_client_secret  = get_env("DATABRICKS_CLIENT_SECRET")
+  aws_vpc_ids               = dependency.aws_vpc.outputs.aws_vpc_ids
+  aws_subnet_ids            = dependency.aws_vpc.outputs.aws_subnet_ids
+  aws_security_group_ids    = dependency.aws_vpc.outputs.aws_security_group_ids
+  aws_vpc_endpoint_ids      = dependency.aws_vpc.outputs.aws_vpc_endpoint_ids
+  aws_rds_instance_fqdns    = dependency.aws_rds.outputs.aws_rds_instance_fqdns
+  aws_vpc_endpoint_services = dependency.aws_elastic_load_balancer.outputs.aws_vpc_endpoint_services
   databricks_credential_configurations = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/databricks/credential-configurations.yaml", {
     environment = include.root.locals.environment
     region      = include.root.locals.region
@@ -62,6 +68,10 @@ inputs = {
     owner = get_env("OWNER", "Databricks"),
   }))
   databricks_account_level_permission_assignments = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/databricks/account-level-permission-assignments.yaml", {
+    environment = include.root.locals.environment
+    region      = include.root.locals.region
+  }))
+  databricks_private_endpoint_rules = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/databricks/private-endpoint-rules.yaml", {
     environment = include.root.locals.environment
     region      = include.root.locals.region
   }))
