@@ -1,0 +1,10 @@
+---
+#-----------------------------------
+# RDS Instances
+#-----------------------------------
+pepr-rds-${environment}-${region}:
+  resources:
+    - rds-hub-postgresql-primary-${environment}-${region}
+    - rds-hub-postgresql-secondary-${environment}-${region}
+  network_connectivity_config_name: ncc-workload-${environment}-${region}
+  vpc_endpoint_service_name: ept-hub-nlb-${environment}-${region}

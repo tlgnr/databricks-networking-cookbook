@@ -32,6 +32,14 @@ variable "aws_vpc_ids" {
   type = map(map(string))
 }
 
+variable "aws_rds_instance_fqdns" {
+  type = map(map(string))
+}
+
+variable "aws_vpc_endpoint_services" {
+  type = map(map(string))
+}
+
 //-----------------------------------
 // Databricks General
 //-----------------------------------
@@ -93,10 +101,6 @@ variable "databricks_workspace_configurations" {
     public_access_enabled         = bool
     storage_configuration_name    = string
     workspace_name                = string
-    permission_assignments = list(object({
-      group_name  = string
-      permissions = list(string)
-    }))
   }))
 }
 
@@ -143,5 +147,16 @@ variable "databricks_account_level_permission_assignments" {
     group_names    = list(string)
     permissions    = list(string)
     workspace_name = string
+  }))
+}
+
+//-----------------------------------
+// Databricks Private Endpoint Rules
+//-----------------------------------
+variable "databricks_private_endpoint_rules" {
+  type = map(object({
+    network_connectivity_config_name = string
+    resources                        = list(string)
+    vpc_endpoint_service_name        = string
   }))
 }

@@ -172,3 +172,20 @@ module "databricks_ncc" {
   region       = var.region
   workspace_id = module.databricks_workspace_configuration[each.value.workspace_name].id
 }
+
+//-----------------------------------
+// Databricks Private Endpoint Rules
+//-----------------------------------
+module "databricks_private_endpoint_rule" {
+  source = "../../../../../../modules/databricks/private-endpoint-rule"
+
+  providers = {
+    databricks = databricks.account
+  }
+
+  for_each = var.databricks_private_endpoint_rules
+
+  network_connectivity_config_id = module.databricks_ncc[each.value.network_connectivity_config_name].id
+  endpoint_service               = var.aws_vpc_endpoint_services[each.value.vpc_endpoint_service_name].service_name
+  domain_names                   = [for resource in each.value.resources : split(":", var.aws_rds_instance_fqdns[resource].endpoint)[0]]
+}
