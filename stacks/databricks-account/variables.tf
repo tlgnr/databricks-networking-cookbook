@@ -1,19 +1,4 @@
 //-----------------------------------
-// AWS General
-//-----------------------------------
-variable "environment" {
-  type = string
-}
-
-variable "region" {
-  type = string
-}
-
-variable "tags" {
-  type = map(string)
-}
-
-//-----------------------------------
 // Dependencies
 //-----------------------------------
 variable "aws_security_group_ids" {
@@ -39,6 +24,22 @@ variable "aws_rds_instance_fqdns" {
 variable "aws_vpc_endpoint_services" {
   type = map(map(string))
 }
+
+//-----------------------------------
+// AWS General
+//-----------------------------------
+variable "environment" {
+  type = string
+}
+
+variable "region" {
+  type = string
+}
+
+variable "tags" {
+  type = map(string)
+}
+
 
 //-----------------------------------
 // Databricks General
