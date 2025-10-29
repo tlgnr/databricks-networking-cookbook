@@ -2,7 +2,7 @@
 // Terraform
 //-----------------------------------
 terraform {
-  source = "${get_repo_root()}/stacks/databricks"
+  source = "${get_repo_root()}/stacks/databricks-account"
 }
 
 //-----------------------------------
