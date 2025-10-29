@@ -1,15 +1,4 @@
 //-----------------------------------
-// AWS General
-//-----------------------------------
-variable "region" {
-  type = string
-}
-
-variable "tags" {
-  type = map(string)
-}
-
-//-----------------------------------
 // Dependencies
 //-----------------------------------
 variable "aws_security_group_ids" {
@@ -26,6 +15,17 @@ variable "aws_vpc_ids" {
 
 variable "aws_rds_instance_endpoints" {
   type = map(map(string))
+}
+
+//-----------------------------------
+// AWS General
+//-----------------------------------
+variable "region" {
+  type = string
+}
+
+variable "tags" {
+  type = map(string)
 }
 
 //-----------------------------------
