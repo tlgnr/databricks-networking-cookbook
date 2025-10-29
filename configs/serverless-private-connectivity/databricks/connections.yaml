@@ -1,0 +1,19 @@
+---
+#-----------------------------------
+# RDS Instance - Primary
+#-----------------------------------
+rds-instance-primary:
+  comment: AWS RDS PostgreSQL Connection
+  connection_type: POSTGRESQL
+  host: rds-hub-postgresql-primary-${environment}-${region}
+  port: 5432
+  user: postgres
+#-----------------------------------
+# RDS Instance - Secondary
+#-----------------------------------
+rds-instance-secondary:
+  comment: AWS RDS PostgreSQL Connection
+  connection_type: POSTGRESQL
+  host: rds-hub-postgresql-secondary-${environment}-${region}
+  port: 5433
+  user: postgres
