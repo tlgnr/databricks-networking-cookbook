@@ -10,7 +10,7 @@ provider "aws" {
 }
 
 //-----------------------------------
-// Databricks Account
+// Databricks Workspace
 //-----------------------------------
 provider "databricks" {
   alias         = "workspace"
