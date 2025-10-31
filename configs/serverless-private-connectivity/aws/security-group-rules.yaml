@@ -1,0 +1,116 @@
+---
+#-----------------------------------
+# Endpoints
+#-----------------------------------
+sgr-hub-endpoints-${environment}-${region}:
+  security_group_egress_rules:
+    all_3306:
+      cidr_ipv4: 0.0.0.0/0
+      from_port: 3306
+      ip_protocol: tcp
+      prefix_list: null
+      referenced_security_group_name: null
+      to_port: 3306
+    all_443:
+      cidr_ipv4: 0.0.0.0/0
+      from_port: 443
+      ip_protocol: tcp
+      prefix_list: null
+      referenced_security_group_name: null
+      to_port: 443
+    all_6666:
+      cidr_ipv4: 0.0.0.0/0
+      from_port: 6666
+      ip_protocol: tcp
+      prefix_list: null
+      referenced_security_group_name: null
+      to_port: 6666
+    all_8443_to_8451:
+      cidr_ipv4: 0.0.0.0/0
+      from_port: 8443
+      ip_protocol: tcp
+      prefix_list: null
+      referenced_security_group_name: null
+      to_port: 8451
+    all_internal:
+      cidr_ipv4: null
+      from_port: 0
+      ip_protocol: tcp
+      prefix_list: null
+      referenced_security_group_name: sgr-hub-endpoints-${environment}-${region}
+      to_port: 65535
+  security_group_ingress_rules:
+    all_tcp:
+      cidr_ipv4: null
+      from_port: 0
+      ip_protocol: tcp
+      prefix_list: null
+      referenced_security_group_name: sgr-hub-endpoints-${environment}-${region}
+      to_port: 65535
+    all_udp:
+      cidr_ipv4: null
+      from_port: 0
+      ip_protocol: udp
+      prefix_list: null
+      referenced_security_group_name: sgr-hub-endpoints-${environment}-${region}
+      to_port: 65535
+#-----------------------------------
+# Public
+#-----------------------------------
+sgr-hub-public-${environment}-${region}:
+  security_group_egress_rules:
+    all_egress:
+      cidr_ipv4: 0.0.0.0/0
+      from_port: -1
+      ip_protocol: -1
+      prefix_list: null
+      referenced_security_group_name: null
+      to_port: -1
+  security_group_ingress_rules:
+    all_internal:
+      cidr_ipv4: 10.0.0.0/16
+      from_port: -1
+      ip_protocol: -1
+      prefix_list: null
+      referenced_security_group_name: null
+      to_port: -1
+#-----------------------------------
+# RDS
+#-----------------------------------
+sgr-hub-rds-${environment}-${region}:
+  security_group_egress_rules:
+    all_egress:
+      cidr_ipv4: 0.0.0.0/0
+      from_port: -1
+      ip_protocol: -1
+      prefix_list: null
+      referenced_security_group_name: null
+      to_port: -1
+  security_group_ingress_rules:
+    all_internal:
+      cidr_ipv4: 10.0.0.0/16
+      from_port: -1
+      ip_protocol: -1
+      prefix_list: null
+      referenced_security_group_name: null
+      to_port: -1
+#-----------------------------------
+# NLB
+#-----------------------------------
+sgr-hub-nlb-${environment}-${region}:
+  security_group_egress_rules:
+    all_egress:
+      cidr_ipv4: 0.0.0.0/0
+      from_port: -1
+      ip_protocol: -1
+      prefix_list: null
+      referenced_security_group_name: null
+      to_port: -1
+  security_group_ingress_rules:
+    all_internal:
+      cidr_ipv4: 10.0.0.0/16
+      from_port: -1
+      ip_protocol: -1
+      prefix_list: null
+      referenced_security_group_name: null
+      to_port: -1

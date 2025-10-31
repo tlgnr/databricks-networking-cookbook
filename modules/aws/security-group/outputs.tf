@@ -2,5 +2,5 @@
 // Security Group
 //-----------------------------------
 output "id" {
-    value = aws_security_group.this.id
+  value = aws_security_group.this.id
 }
