@@ -33,9 +33,10 @@ variable "tags" {
 //-----------------------------------
 variable "aws_elastic_load_balancers" {
   type = map(object({
-    enable_cross_zone_load_balancing = bool
-    enable_deletion_protection       = bool
-    internal                         = bool
+    enable_cross_zone_load_balancing                             = bool
+    enable_deletion_protection                                   = bool
+    enforce_security_group_inbound_rules_on_private_link_traffic = string
+    internal                                                     = bool
     listeners = map(object({
       port              = number
       protocol          = string

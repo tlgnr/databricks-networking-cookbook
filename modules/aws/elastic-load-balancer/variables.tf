@@ -9,6 +9,10 @@ variable "enable_deletion_protection" {
   type = bool
 }
 
+variable "enforce_security_group_inbound_rules_on_private_link_traffic" {
+  type = string
+}
+
 variable "internal" {
   type = bool
 }

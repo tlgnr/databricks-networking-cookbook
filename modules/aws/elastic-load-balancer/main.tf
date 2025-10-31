@@ -2,13 +2,14 @@
 // Elastic Load Balancer
 //-----------------------------------
 resource "aws_lb" "this" {
-  name                             = var.name
-  internal                         = var.internal
-  load_balancer_type               = var.load_balancer_type
-  subnets                          = var.subnets
-  enable_deletion_protection       = var.enable_deletion_protection
-  enable_cross_zone_load_balancing = var.enable_cross_zone_load_balancing
-  security_groups                  = var.security_groups
+  enable_cross_zone_load_balancing                             = var.enable_cross_zone_load_balancing
+  enable_deletion_protection                                   = var.enable_deletion_protection
+  enforce_security_group_inbound_rules_on_private_link_traffic = var.enforce_security_group_inbound_rules_on_private_link_traffic
+  internal                                                     = var.internal
+  load_balancer_type                                           = var.load_balancer_type
+  name                                                         = var.name
+  security_groups                                              = var.security_groups
+  subnets                                                      = var.subnets
 
   tags = {
     Name = var.name
