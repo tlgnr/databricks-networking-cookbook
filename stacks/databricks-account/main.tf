@@ -105,13 +105,13 @@ module "databricks_group" {
 module "databricks_metastore" {
   source = "../../../../../../modules/databricks/metastore"
 
-  providers = {
-    databricks = databricks.account
-  }
-
   depends_on = [
     module.databricks_group,
   ]
+
+  providers = {
+    databricks = databricks.account
+  }
 
   for_each = var.databricks_metastores
 
@@ -145,6 +145,11 @@ module "databricks_metastore_assignment" {
 module "databricks_account_level_permission_assignment" {
   source = "../../../../../../modules/databricks/account-level-permission-assignment"
 
+  depends_on = [
+    module.databricks_workspace_configuration,
+    module.databricks_group,
+  ]
+
   providers = {
     databricks = databricks.account
   }
@@ -152,7 +157,7 @@ module "databricks_account_level_permission_assignment" {
   for_each = var.databricks_account_level_permission_assignments
 
   permissions   = each.value.permissions
-  principal_ids = [for group_name in each.value.group_names : module.databricks_group[group_name].id]
+  principal_ids = {for group_name in each.value.group_names : group_name => module.databricks_group[group_name].id}
   workspace_id  = module.databricks_workspace_configuration[each.value.workspace_name].id
 }
 

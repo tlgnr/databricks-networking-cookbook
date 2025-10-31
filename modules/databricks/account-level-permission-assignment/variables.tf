@@ -6,7 +6,7 @@ variable "permissions" {
 }
 
 variable "principal_ids" {
-  type = list(string)
+  type = map(string)
 }
 
 variable "workspace_id" {
