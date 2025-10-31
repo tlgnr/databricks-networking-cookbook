@@ -81,11 +81,19 @@ variable "aws_subnets" {
 //-----------------------------------
 variable "aws_security_groups" {
   type = map(object({
-    name                         = string
-    description                  = string
-    security_group_egress_rules  = list(map(string))
-    security_group_ingress_rules = list(map(string))
-    vpc_name                     = string
+    description = string
+    name        = string
+    vpc_name    = string
+  }))
+}
+
+//-----------------------------------
+// AWS Security Group Rules
+//-----------------------------------
+variable "aws_security_group_rules" {
+  type = map(object({
+    security_group_egress_rules  = map(map(string))
+    security_group_ingress_rules = map(map(string))
   }))
 }
 

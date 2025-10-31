@@ -45,6 +45,10 @@ inputs = {
     environment = include.root.locals.environment
     region      = include.root.locals.region
   }))
+  aws_security_group_rules = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/aws/security-group-rules.yaml", {
+    environment = include.root.locals.environment
+    region      = include.root.locals.region
+  }))
   aws_vpc_endpoints = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/aws/vpc-endpoints.yaml", {
     environment = include.root.locals.environment
     region      = include.root.locals.region

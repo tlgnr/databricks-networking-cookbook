@@ -85,12 +85,23 @@ module "aws_security_group" {
 
   for_each = var.aws_security_groups
 
-  description                  = each.value.description
-  name                         = each.value.name
+  description = each.value.description
+  name        = each.value.name
+  vpc_id      = module.aws_vpc[each.value.vpc_name].id
+}
+
+//-----------------------------------
+// AWS Security Group Rules
+//-----------------------------------
+module "aws_security_group_rule" {
+  source = "../../../../../../modules/aws/security-group-rule"
+
+  for_each = var.aws_security_group_rules
+
+  security_group_egress_rules  = [for k, v in var.aws_security_group_rules[each.key].security_group_egress_rules : merge(v, { name = k, security_group_name = each.key, referenced_security_group_id = try(module.aws_security_group[v.referenced_security_group_name].id, null) })]
+  security_group_id            = module.aws_security_group[each.key].id
+  security_group_ingress_rules = [for k, v in var.aws_security_group_rules[each.key].security_group_ingress_rules : merge(v, { name = k, security_group_name = each.key, referenced_security_group_id = try(module.aws_security_group[v.referenced_security_group_name].id, null) })]
   region                       = var.region
-  security_group_egress_rules  = each.value.security_group_egress_rules
-  security_group_ingress_rules = each.value.security_group_ingress_rules
-  vpc_id                       = module.aws_vpc[each.value.vpc_name].id
 }
 
 //-----------------------------------

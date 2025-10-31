@@ -157,7 +157,7 @@ module "databricks_account_level_permission_assignment" {
   for_each = var.databricks_account_level_permission_assignments
 
   permissions   = each.value.permissions
-  principal_ids = {for group_name in each.value.group_names : group_name => module.databricks_group[group_name].id}
+  principal_ids = { for group_name in each.value.group_names : group_name => module.databricks_group[group_name].id }
   workspace_id  = module.databricks_workspace_configuration[each.value.workspace_name].id
 }
 
