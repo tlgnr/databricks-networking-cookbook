@@ -6,8 +6,8 @@ nc-workload-${environment}-${region}:
   security_group_names:
     - sgr-hub-endpoints-${environment}-${region}
   subnet_names:
-    - subnet-hub-endpoints-${environment}-${region}a
-    - subnet-hub-endpoints-${environment}-${region}b
+    - subnet-hub-private-${environment}-${region}a
+    - subnet-hub-private-${environment}-${region}b
   vpc_endpoint_relay_name: ept-hub-relay-interface-${environment}-${region}
   vpc_endpoint_rest_api_name: ept-hub-rest-interface-${environment}-${region}
   vpc_name: vpc-hub-${environment}-${region}

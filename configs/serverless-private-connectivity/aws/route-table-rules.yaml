@@ -7,6 +7,13 @@ public-subnet-${region}-to-igw:
   internet_gateway_name: igw-hub-${environment}-${region}
   route_table_name: rt-hub-public-${environment}-${region}
 #-----------------------------------
+# NAT Subnets- To Internet Gateway
+#-----------------------------------
+nat-subnet-${region}-to-igw:
+  destination_cidr_block: 0.0.0.0/0
+  internet_gateway_name: igw-hub-${environment}-${region}
+  route_table_name: rt-hub-nat-${environment}-${region}
+#-----------------------------------
 # Private Subnet to NAT Gateway in AZ1
 #-----------------------------------
 private-subnet-${region}a-to-ngw:
