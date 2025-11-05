@@ -72,12 +72,23 @@ module "aws_security_group" {
 
   for_each = local.aws_security_groups
 
-  name                         = each.value.name
-  description                  = each.value.description
+  description = each.value.description
+  name        = each.value.name
+  vpc_id      = module.aws_vpc[each.value.vpc_name].id
+}
+
+//-----------------------------------
+// AWS Security Group Rules
+//-----------------------------------
+module "aws_security_group_rule" {
+  source = "../../modules/aws/security-group-rule"
+
+  for_each = local.aws_security_group_rules
+
+  security_group_egress_rules  = [for k, v in local.aws_security_group_rules[each.key].security_group_egress_rules : merge(v, { name = k, security_group_name = each.key, referenced_security_group_id = try(module.aws_security_group[v.referenced_security_group_name].id, null) })]
+  security_group_id            = module.aws_security_group[each.key].id
+  security_group_ingress_rules = [for k, v in local.aws_security_group_rules[each.key].security_group_ingress_rules : merge(v, { name = k, security_group_name = each.key, referenced_security_group_id = try(module.aws_security_group[v.referenced_security_group_name].id, null) })]
   region                       = var.region
-  vpc_id                       = module.aws_vpc[each.value.vpc_name].id
-  security_group_ingress_rules = each.value.security_group_ingress_rules
-  security_group_egress_rules  = each.value.security_group_egress_rules
 }
 
 //-----------------------------------
@@ -447,6 +458,10 @@ module "azure_databricks_account_permission_assignment" {
     databricks = databricks.azure_account
   }
 
+  depends_on = [
+    module.azure_databricks_metastore_assignment,
+  ]
+
   for_each = local.azure_databricks_account_permission_assignments
 
   principal_id   = each.value.principal_id
@@ -475,46 +490,46 @@ module "azure_private_endpoint" {
   tags                            = var.tags
 }
 
-//-----------------------------------
-// AWS RDS Subnet Group
-//-----------------------------------
-module "aws_rds_subnet_group" {
-  source = "../../modules/aws/subnet-group"
+# //-----------------------------------
+# // AWS RDS Subnet Group
+# //-----------------------------------
+# module "aws_rds_subnet_group" {
+#   source = "../../modules/aws/subnet-group"
 
-  for_each = local.aws_rds_subnet_groups
+#   for_each = local.aws_rds_subnet_groups
 
-  name       = each.value.name
-  subnet_ids = [for name in each.value.subnet_names : module.aws_subnet[name].id]
-}
+#   name       = each.value.name
+#   subnet_ids = [for name in each.value.subnet_names : module.aws_subnet[name].id]
+# }
 
-//-----------------------------------
-// AWS RDS PostgreSQL Instance
-//-----------------------------------
-module "aws_rds_postgresql_instance" {
-  source = "../../modules/aws/rds-instance"
+# //-----------------------------------
+# // AWS RDS PostgreSQL Instance
+# //-----------------------------------
+# module "aws_rds_postgresql_instance" {
+#   source = "../../modules/aws/rds-instance"
 
-  depends_on = [
-    module.aws_rds_subnet_group,
-  ]
+#   depends_on = [
+#     module.aws_rds_subnet_group,
+#   ]
 
-  for_each = local.aws_rds_postgresql_instances
+#   for_each = local.aws_rds_postgresql_instances
 
-  allocated_storage                   = each.value.allocated_storage
-  apply_immediately                   = each.value.apply_immediately
-  copy_tags_to_snapshot               = each.value.copy_tags_to_snapshot
-  engine                              = each.value.engine
-  engine_version                      = each.value.engine_version
-  iam_database_authentication_enabled = each.value.iam_database_authentication_enabled
-  instance_class                      = each.value.instance_class
-  max_allocated_storage               = each.value.max_allocated_storage
-  parameter_group_name                = each.value.parameter_group_name
-  skip_final_snapshot                 = each.value.skip_final_snapshot
-  storage_encrypted                   = each.value.storage_encrypted
-  subnet_group_name                   = each.value.subnet_group_name
-  username                            = each.value.username
-  vpc_security_group_ids              = [for name in each.value.vpc_security_group_names : module.aws_security_group[name].id]
-  identifier                          = each.value.identifier
-}
+#   allocated_storage                   = each.value.allocated_storage
+#   apply_immediately                   = each.value.apply_immediately
+#   copy_tags_to_snapshot               = each.value.copy_tags_to_snapshot
+#   engine                              = each.value.engine
+#   engine_version                      = each.value.engine_version
+#   iam_database_authentication_enabled = each.value.iam_database_authentication_enabled
+#   instance_class                      = each.value.instance_class
+#   max_allocated_storage               = each.value.max_allocated_storage
+#   parameter_group_name                = each.value.parameter_group_name
+#   skip_final_snapshot                 = each.value.skip_final_snapshot
+#   storage_encrypted                   = each.value.storage_encrypted
+#   subnet_group_name                   = each.value.subnet_group_name
+#   username                            = each.value.username
+#   vpc_security_group_ids              = [for name in each.value.vpc_security_group_names : module.aws_security_group[name].id]
+#   identifier                          = each.value.identifier
+# }
 
 //-----------------------------------
 // Azure Databricks Metastore
@@ -552,47 +567,47 @@ module "azure_databricks_metastore_assignment" {
   metastore_id = module.azure_databricks_metastore[each.value.metastore_name].id
 }
 
-//-----------------------------------
-// Azure Databricks Connection
-//-----------------------------------
-module "azure_databricks_connection" {
-  source = "../../modules/databricks/connection"
+# //-----------------------------------
+# // Azure Databricks Connection
+# //-----------------------------------
+# module "azure_databricks_connection" {
+#   source = "../../modules/databricks/connection"
 
-  depends_on = [
-    module.azure_databricks_metastore_assignment,
-    module.azure_databricks_account_permission_assignment,
-  ]
+#   depends_on = [
+#     module.azure_databricks_metastore_assignment,
+#     module.azure_databricks_account_permission_assignment,
+#   ]
 
-  providers = {
-    databricks = databricks.azure_workspace
-  }
+#   providers = {
+#     databricks = databricks.azure_workspace
+#   }
 
-  for_each = local.azure_databricks_connections
+#   for_each = local.azure_databricks_connections
 
-  comment         = each.value.comment
-  connection_type = each.value.connection_type
-  host            = split(":", module.aws_rds_postgresql_instance[each.value.name].endpoint)[0]
-  password        = module.aws_rds_postgresql_instance[each.value.name].password
-  port            = each.value.port
-  user            = each.value.user
-  name            = each.value.name
-}
+#   comment         = each.value.comment
+#   connection_type = each.value.connection_type
+#   host            = split(":", module.aws_rds_postgresql_instance[each.value.name].endpoint)[0]
+#   password        = module.aws_rds_postgresql_instance[each.value.name].password
+#   port            = each.value.port
+#   user            = each.value.user
+#   name            = each.value.name
+# }
 
-//-----------------------------------
-// Azure Databricks Catalog
-//-----------------------------------
-module "azure_databricks_catalog" {
-  source = "../../modules/databricks/catalog"
+# //-----------------------------------
+# // Azure Databricks Catalog
+# //-----------------------------------
+# module "azure_databricks_catalog" {
+#   source = "../../modules/databricks/catalog"
 
-  providers = {
-    databricks = databricks.azure_workspace
-  }
+#   providers = {
+#     databricks = databricks.azure_workspace
+#   }
 
-  for_each = local.azure_databricks_catalogs
+#   for_each = local.azure_databricks_catalogs
 
-  comment         = each.value.comment
-  connection_name = each.value.connection_name
-  isolation_mode  = each.value.isolation_mode
-  options         = each.value.options
-  name            = each.value.name
-}
+#   comment         = each.value.comment
+#   connection_name = each.value.connection_name
+#   isolation_mode  = each.value.isolation_mode
+#   options         = each.value.options
+#   name            = each.value.name
+# }
