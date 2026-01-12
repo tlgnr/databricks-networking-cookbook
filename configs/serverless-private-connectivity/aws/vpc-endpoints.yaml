@@ -62,7 +62,7 @@ ept-hub-relay-interface-${environment}-${region}:
   security_group_names:
     - sgr-hub-endpoints-${environment}-${region}
   service: null
-  service_name: com.amazonaws.vpce.us-east-1.vpce-svc-00018a8c3ff62ffdf
+  service_name: com.amazonaws.vpce.us-east-2.vpce-svc-090a8fab0d73e39a6
   service_regions:
     - ${region}
   service_type: Interface
@@ -80,7 +80,7 @@ ept-hub-rest-interface-${environment}-${region}:
   security_group_names:
     - sgr-hub-endpoints-${environment}-${region}
   service: null
-  service_name: com.amazonaws.vpce.us-east-1.vpce-svc-09143d1e626de2f04
+  service_name: com.amazonaws.vpce.us-east-2.vpce-svc-041dc2b4d7796b8d3
   service_regions:
     - ${region}
   service_type: Interface

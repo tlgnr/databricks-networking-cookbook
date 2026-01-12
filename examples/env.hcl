@@ -2,7 +2,7 @@
 // Environment Configuration
 //-----------------------------------
 locals {
-  region      = "us-east-1"
+  region      = "us-east-2"
   location    = "eastus"
   environment = "dev"
 
