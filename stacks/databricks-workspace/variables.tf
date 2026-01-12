@@ -9,6 +9,10 @@ variable "aws_rds_instances" {
   type = map(map(string))
 }
 
+variable "databricks_metastores" {
+  type = map(map(string))
+}
+
 //-----------------------------------
 // AWS General
 //-----------------------------------
@@ -50,4 +54,11 @@ variable "databricks_connections" {
     port            = number
     user            = string
   }))
+}
+
+//-----------------------------------
+// Databricks External Locations
+//-----------------------------------
+variable "databricks_external_locations" {
+  type = any
 }

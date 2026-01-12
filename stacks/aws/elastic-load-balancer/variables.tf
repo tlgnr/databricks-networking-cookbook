@@ -1,19 +1,19 @@
 //-----------------------------------
 // Dependencies
 //-----------------------------------
-variable "aws_security_group_ids" {
+variable "aws_security_groups" {
   type = map(map(string))
 }
 
-variable "aws_subnet_ids" {
+variable "aws_subnets" {
   type = map(map(string))
 }
 
-variable "aws_vpc_ids" {
+variable "aws_vpcs" {
   type = map(map(string))
 }
 
-variable "aws_rds_instance_endpoints" {
+variable "aws_rds_instances" {
   type = map(map(string))
 }
 

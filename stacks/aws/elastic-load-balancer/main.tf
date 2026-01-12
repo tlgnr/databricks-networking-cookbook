@@ -13,13 +13,13 @@ module "aws_elastic_load_balancer" {
   listeners                                                    = each.value.listeners
   load_balancer_type                                           = each.value.load_balancer_type
   name                                                         = each.value.name
-  security_groups                                              = [for security_group_name in each.value.security_group_names : var.aws_security_group_ids[security_group_name].id]
-  subnets                                                      = [for subnet_name in each.value.subnet_names : var.aws_subnet_ids[subnet_name].id]
+  security_groups                                              = [for security_group_name in each.value.security_group_names : var.aws_security_groups[security_group_name].id]
+  subnets                                                      = [for subnet_name in each.value.subnet_names : var.aws_subnets[subnet_name].id]
 
   target_groups = {
     for k, v in each.value.target_groups : k => merge(v, {
-      vpc_id    = var.aws_vpc_ids[v.vpc_name].id
-      target_id = split(":", var.aws_rds_instance_endpoints[v.target_name].endpoint)[0]
+      vpc_id    = var.aws_vpcs[v.vpc_name].id
+      target_id = split(":", var.aws_rds_instances[v.target_name].endpoint)[0]
     })
   }
 }

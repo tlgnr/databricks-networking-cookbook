@@ -38,7 +38,7 @@ resource "aws_iam_role_policy" "this" {
 resource "databricks_mws_credentials" "this" {
   provider = databricks
 
-  depends_on = [aws_iam_role.this]
+  depends_on = [aws_iam_role.this, aws_iam_role_policy.this]
 
   role_arn         = aws_iam_role.this.arn
   credentials_name = var.credential_name

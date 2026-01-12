@@ -49,11 +49,11 @@ module "databricks_network_configuration" {
   for_each = var.databricks_network_configurations
 
   account_id                   = var.databricks_account_id
-  aws_security_group_ids       = [for security_group_name in each.value.security_group_names : var.aws_security_group_ids[security_group_name].id]
-  aws_subnet_ids               = [for subnet_name in each.value.subnet_names : var.aws_subnet_ids[subnet_name].id]
-  aws_vpc_endpoint_relay_id    = var.aws_vpc_endpoint_ids[each.value.vpc_endpoint_relay_name].id
-  aws_vpc_endpoint_rest_api_id = var.aws_vpc_endpoint_ids[each.value.vpc_endpoint_rest_api_name].id
-  aws_vpc_id                   = var.aws_vpc_ids[each.value.vpc_name].id
+  aws_security_group_ids       = [for security_group_name in each.value.security_group_names : var.aws_security_groups[security_group_name].id]
+  aws_subnet_ids               = [for subnet_name in each.value.subnet_names : var.aws_subnets[subnet_name].id]
+  aws_vpc_endpoint_relay_id    = var.aws_vpc_endpoints[each.value.vpc_endpoint_relay_name].id
+  aws_vpc_endpoint_rest_api_id = var.aws_vpc_endpoints[each.value.vpc_endpoint_rest_api_name].id
+  aws_vpc_id                   = var.aws_vpcs[each.value.vpc_name].id
   environment                  = var.environment
   network_name                 = each.key
   region                       = var.region
@@ -146,6 +146,8 @@ module "databricks_account_level_permission_assignment" {
   source = "../../../../../../modules/databricks/account-level-permission-assignment"
 
   depends_on = [
+    module.databricks_metastore,
+    module.databricks_metastore_assignment,
     module.databricks_workspace_configuration,
     module.databricks_group,
   ]
@@ -192,5 +194,5 @@ module "databricks_private_endpoint_rule" {
 
   network_connectivity_config_id = module.databricks_ncc[each.value.network_connectivity_config_name].id
   endpoint_service               = var.aws_vpc_endpoint_services[each.value.vpc_endpoint_service_name].service_name
-  domain_names                   = [for resource in each.value.resources : split(":", var.aws_rds_instance_fqdns[resource].endpoint)[0]]
+  domain_names                   = [for resource in each.value.resources : split(":", var.aws_rds_instances[resource].endpoint)[0]]
 }

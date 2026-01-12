@@ -7,7 +7,7 @@ module "aws_rds_subnet_group" {
   for_each = var.aws_subnet_groups
 
   name       = each.value.name
-  subnet_ids = [for subnet_name in each.value.subnet_names : var.aws_subnet_ids[subnet_name].id]
+  subnet_ids = [for subnet_name in each.value.subnet_names : var.aws_subnets[subnet_name].id]
 }
 
 //-----------------------------------
@@ -15,6 +15,10 @@ module "aws_rds_subnet_group" {
 //-----------------------------------
 module "aws_rds_instance" {
   source = "../../../../../../modules/aws/rds-instance"
+
+  depends_on = [
+    module.aws_rds_subnet_group,
+  ]
 
   for_each = var.aws_rds_instances
 
@@ -32,5 +36,5 @@ module "aws_rds_instance" {
   storage_encrypted                   = each.value.storage_encrypted
   subnet_group_name                   = each.value.subnet_group_name
   username                            = each.value.username
-  vpc_security_group_ids              = [for security_group_name in each.value.vpc_security_group_names : var.aws_security_group_ids[security_group_name].id]
+  vpc_security_group_ids              = [for security_group_name in each.value.vpc_security_group_names : var.aws_security_groups[security_group_name].id]
 }

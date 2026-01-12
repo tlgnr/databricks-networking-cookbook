@@ -1,0 +1,11 @@
+---
+#-----------------------------------
+# Data
+#-----------------------------------
+s3-databricks-data-${environment}-${region}:
+  bucket: s3-databricks-data-${environment}-${region}
+  folder: data
+  role_name: role-databricks-s3-${region}
+  policy_name: policy-databricks-s3-${region}
+  metastore_name: metastore-${region}
+  force_destroy: true

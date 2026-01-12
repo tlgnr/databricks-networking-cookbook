@@ -7,11 +7,15 @@ output "aws_rds_instances" {
 }
 
 output "aws_rds_instance_fqdns" {
-  value     = module.aws_rds_instance
+  value = {
+    for k, v in module.aws_rds_instance : k => v.endpoint
+  }
   sensitive = true
 }
 
 output "aws_rds_instance_passwords" {
-  value     = module.aws_rds_instance
+  value = {
+    for k, v in module.aws_rds_instance : k => v.password
+  }
   sensitive = true
 }

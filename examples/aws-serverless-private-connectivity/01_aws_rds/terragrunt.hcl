@@ -32,8 +32,8 @@ inputs = {
     environment = include.root.locals.environment
     region      = include.root.locals.region
   }))
-  aws_subnet_ids         = dependency.aws_vpc.outputs.aws_subnet_ids
-  aws_security_group_ids = dependency.aws_vpc.outputs.aws_security_group_ids
+  aws_subnets         = dependency.aws_vpc.outputs.aws_subnets
+  aws_security_groups = dependency.aws_vpc.outputs.aws_security_groups
   tags = merge(
     include.root.locals.tags,
     {
