@@ -31,12 +31,17 @@ inputs = {
   databricks_account_id    = get_env("DATABRICKS_ACCOUNT_ID")
   databricks_client_id     = get_env("DATABRICKS_CLIENT_ID")
   databricks_client_secret = get_env("DATABRICKS_CLIENT_SECRET")
-  databricks_host          = dependency.databricks_account.outputs.databricks_workspaces["adb-workload-dev-us-east-1"].workspace_url
-  databricks_connections = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/databricks/connections.yaml", {
+  databricks_host          = dependency.databricks_account.outputs.databricks_workspaces["adb-workload-dev-us-east-2"].workspace_url
+  # databricks_connections = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/databricks/connections.yaml", {
+  #   environment = include.root.locals.environment
+  #   region      = include.root.locals.region
+  # }))
+  databricks_external_locations = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/databricks/external-locations.yaml", {
     environment = include.root.locals.environment
     region      = include.root.locals.region
   }))
-  aws_rds_instances = dependency.aws_rds.outputs.aws_rds_instances
+  aws_rds_instances     = dependency.aws_rds.outputs.aws_rds_instances
+  databricks_metastores = dependency.databricks_account.outputs.databricks_metastores
   tags = merge(
     include.root.locals.tags,
     {
