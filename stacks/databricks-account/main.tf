@@ -180,19 +180,19 @@ module "databricks_ncc" {
   workspace_id = module.databricks_workspace_configuration[each.value.workspace_name].id
 }
 
-//-----------------------------------
-// Databricks Private Endpoint Rules
-//-----------------------------------
-module "databricks_private_endpoint_rule" {
-  source = "../../../../../../modules/databricks/private-endpoint-rule"
+# //-----------------------------------
+# // Databricks Private Endpoint Rules
+# //-----------------------------------
+# module "databricks_private_endpoint_rule" {
+#   source = "../../../../../../modules/databricks/private-endpoint-rule"
 
-  providers = {
-    databricks = databricks.account
-  }
+#   providers = {
+#     databricks = databricks.account
+#   }
 
-  for_each = var.databricks_private_endpoint_rules
+#   for_each = var.databricks_private_endpoint_rules
 
-  network_connectivity_config_id = module.databricks_ncc[each.value.network_connectivity_config_name].id
-  endpoint_service               = var.aws_vpc_endpoint_services[each.value.vpc_endpoint_service_name].service_name
-  domain_names                   = [for resource in each.value.resources : split(":", var.aws_rds_instances[resource].endpoint)[0]]
-}
+#   network_connectivity_config_id = module.databricks_ncc[each.value.network_connectivity_config_name].id
+#   endpoint_service               = var.aws_vpc_endpoint_services[each.value.vpc_endpoint_service_name].service_name
+#   domain_names                   = [for resource in each.value.resources : split(":", var.aws_rds_instances[resource].endpoint)[0]]
+# }

@@ -21,9 +21,9 @@ sgr-hub-rds-${environment}-${region}:
   name: sgr-hub-rds-${environment}-${region}
   vpc_name: vpc-hub-${environment}-${region}
 #-----------------------------------
-# NLB
+# ALB
 #-----------------------------------
-sgr-hub-nlb-${environment}-${region}:
-  description: Security group for NLB instances
-  name: sgr-hub-nlb-${environment}-${region}
+sgr-hub-alb-${environment}-${region}:
+  description: Security group for ALB instances
+  name: sgr-hub-alb-${environment}-${region}
   vpc_name: vpc-hub-${environment}-${region}

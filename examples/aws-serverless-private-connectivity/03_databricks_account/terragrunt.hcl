@@ -20,13 +20,13 @@ dependency "aws_vpc" {
   config_path = "../00_aws_vpc"
 }
 
-dependency "aws_rds" {
-  config_path = "../01_aws_rds"
-}
+# dependency "aws_rds" {
+#   config_path = "../01_aws_rds"
+# }
 
-dependency "aws_elastic_load_balancer" {
-  config_path = "../02_aws_elastic_load_balancer"
-}
+# dependency "aws_elastic_load_balancer" {
+#   config_path = "../02_aws_elastic_load_balancer"
+# }
 
 //-----------------------------------
 // Inputs
@@ -39,8 +39,8 @@ inputs = {
   aws_subnets               = dependency.aws_vpc.outputs.aws_subnets
   aws_security_groups       = dependency.aws_vpc.outputs.aws_security_groups
   aws_vpc_endpoints         = dependency.aws_vpc.outputs.aws_vpc_endpoints
-  aws_rds_instances         = dependency.aws_rds.outputs.aws_rds_instances
-  aws_vpc_endpoint_services = dependency.aws_elastic_load_balancer.outputs.aws_vpc_endpoint_services
+  # aws_rds_instances         = dependency.aws_rds.outputs.aws_rds_instances
+  # aws_vpc_endpoint_services = dependency.aws_elastic_load_balancer.outputs.aws_vpc_endpoint_services
   databricks_credential_configurations = yamldecode(templatefile("${get_repo_root()}/configs/serverless-private-connectivity/databricks/credential-configurations.yaml", {
     environment = include.root.locals.environment
     region      = include.root.locals.region

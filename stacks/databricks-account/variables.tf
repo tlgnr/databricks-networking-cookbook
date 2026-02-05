@@ -17,13 +17,13 @@ variable "aws_vpcs" {
   type = map(map(string))
 }
 
-variable "aws_rds_instances" {
-  type = map(map(string))
-}
+# variable "aws_rds_instances" {
+#   type = map(map(string))
+# }
 
-variable "aws_vpc_endpoint_services" {
-  type = map(map(string))
-}
+# variable "aws_vpc_endpoint_services" {
+#   type = map(map(string))
+# }
 
 //-----------------------------------
 // AWS General

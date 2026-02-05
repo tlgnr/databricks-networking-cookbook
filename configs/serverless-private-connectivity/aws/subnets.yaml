@@ -90,20 +90,20 @@ subnet-hub-rds-${environment}-${region}b:
   route_table_name: rt-hub-rds-${environment}-${region}
   vpc_name: vpc-hub-${environment}-${region}
 #-----------------------------------
-# NLB AZ1
+# ALB AZ1
 #-----------------------------------
-subnet-hub-nlb-${environment}-${region}a:
+subnet-hub-alb-${environment}-${region}a:
   availability_zone: ${region}a
   cidr_block: 10.0.10.0/24
-  name: subnet-hub-nlb-${environment}-${region}a
-  route_table_name: rt-hub-nlb-${environment}-${region}
+  name: subnet-hub-alb-${environment}-${region}a
+  route_table_name: rt-hub-alb-${environment}-${region}
   vpc_name: vpc-hub-${environment}-${region}
 #-----------------------------------
-# NLB AZ2
+# ALB AZ2
 #-----------------------------------
-subnet-hub-nlb-${environment}-${region}b:
+subnet-hub-alb-${environment}-${region}b:
   availability_zone: ${region}b
   cidr_block: 10.0.11.0/24
-  name: subnet-hub-nlb-${environment}-${region}b
-  route_table_name: rt-hub-nlb-${environment}-${region}
+  name: subnet-hub-alb-${environment}-${region}b
+  route_table_name: rt-hub-alb-${environment}-${region}
   vpc_name: vpc-hub-${environment}-${region}

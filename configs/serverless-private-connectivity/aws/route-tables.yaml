@@ -52,11 +52,11 @@ rt-hub-rds-${environment}-${region}:
     - subnet-hub-rds-${environment}-${region}b
   vpc_name: vpc-hub-${environment}-${region}
 #-----------------------------------
-# NLB
+# ALB
 #-----------------------------------
-rt-hub-nlb-${environment}-${region}:
-  name: rt-hub-nlb-${environment}-${region}
+rt-hub-alb-${environment}-${region}:
+  name: rt-hub-alb-${environment}-${region}
   subnet_names:
-    - subnet-hub-nlb-${environment}-${region}a
-    - subnet-hub-nlb-${environment}-${region}b
+    - subnet-hub-alb-${environment}-${region}a
+    - subnet-hub-alb-${environment}-${region}b
   vpc_name: vpc-hub-${environment}-${region}

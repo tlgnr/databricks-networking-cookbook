@@ -5,9 +5,9 @@ variable "databricks_host" {
   type = string
 }
 
-variable "aws_rds_instances" {
-  type = map(map(string))
-}
+# variable "aws_rds_instances" {
+#   type = map(map(string))
+# }
 
 variable "databricks_metastores" {
   type = map(map(string))

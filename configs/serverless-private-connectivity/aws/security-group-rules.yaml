@@ -102,9 +102,9 @@ sgr-hub-rds-${environment}-${region}:
       referenced_security_group_name: null
       to_port: -1
 #-----------------------------------
-# NLB
+# ALB
 #-----------------------------------
-sgr-hub-nlb-${environment}-${region}:
+sgr-hub-alb-${environment}-${region}:
   security_group_egress_rules:
     all_egress:
       cidr_ipv4: 0.0.0.0/0

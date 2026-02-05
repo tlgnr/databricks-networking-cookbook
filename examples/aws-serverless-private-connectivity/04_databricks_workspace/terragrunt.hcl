@@ -16,9 +16,9 @@ include "root" {
 //-----------------------------------
 // Dependencies
 //-----------------------------------
-dependency "aws_rds" {
-  config_path = "../01_aws_rds"
-}
+# dependency "aws_rds" {
+#   config_path = "../01_aws_rds"
+# }
 
 dependency "databricks_account" {
   config_path = "../03_databricks_account"
@@ -40,7 +40,7 @@ inputs = {
     environment = include.root.locals.environment
     region      = include.root.locals.region
   }))
-  aws_rds_instances     = dependency.aws_rds.outputs.aws_rds_instances
+  # aws_rds_instances     = dependency.aws_rds.outputs.aws_rds_instances
   databricks_metastores = dependency.databricks_account.outputs.databricks_metastores
   tags = merge(
     include.root.locals.tags,
