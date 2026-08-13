@@ -249,6 +249,7 @@ module "azure_public_ip" {
   resource_group_name = each.value.resource_group_name
   allocation_method   = each.value.allocation_method
   sku                 = each.value.sku
+  zones               = try(each.value.zones, null)
   location            = var.location
   tags                = var.tags
 }

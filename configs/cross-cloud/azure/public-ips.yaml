@@ -7,6 +7,10 @@ pip-hub-vgw-${environment}-${location}-001:
   name: pip-hub-vgw-${environment}-${location}-001
   resource_group_name: rg-hub-${environment}-${location}
   sku: Standard
+  zones:
+    - "1"
+    - "2"
+    - "3"
 #-----------------------------------
 # Hub - Virtual Network Gateway 2
 #-----------------------------------
@@ -15,3 +19,7 @@ pip-hub-vgw-${environment}-${location}-002:
   name: pip-hub-vgw-${environment}-${location}-002
   resource_group_name: rg-hub-${environment}-${location}
   sku: Standard
+  zones:
+    - "1"
+    - "2"
+    - "3"

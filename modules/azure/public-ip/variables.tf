@@ -24,3 +24,8 @@ variable "sku" {
 variable "tags" {
   type = map(string)
 }
+
+variable "zones" {
+  type    = list(string)
+  default = null
+}
