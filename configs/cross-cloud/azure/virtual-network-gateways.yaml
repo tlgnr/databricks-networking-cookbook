@@ -17,7 +17,7 @@ vgw-hub-${environment}-${location}:
   ip_configurations_subnet_name: subnet-hub-gateway-${environment}-${location}
   name: vgw-hub-${environment}-${location}
   resource_group_name: rg-hub-${environment}-${location}
-  sku: VpnGw2
+  sku: VpnGw2AZ
   subnet_name: subnet-hub-gateway-${environment}-${location}
   type: Vpn
   vpn_type: RouteBased
